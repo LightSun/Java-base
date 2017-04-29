@@ -16,11 +16,14 @@
 
 package com.heaven7.java.base.util;
 
-import com.heaven7.java.anno.Nullable;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import com.heaven7.java.base.anno.Nullable;
 
 
 /**
