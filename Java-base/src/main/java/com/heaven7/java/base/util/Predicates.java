@@ -20,6 +20,12 @@ public final class Predicates {
 	public static <E> boolean isEmpty(List<E> list) {
 		return list == null || list.size() == 0;
 	}
+	public static boolean isEmpty(int[] arr) {
+		return arr == null || arr.length == 0;
+	}
+	public static <T> boolean isEmpty(T[] arr) {
+		return arr == null || arr.length == 0;
+	}
 	public static <K,V> boolean isSortedMap(java.util.Map<K, V> map){
 		return map instanceof SortedMap;
 	}
