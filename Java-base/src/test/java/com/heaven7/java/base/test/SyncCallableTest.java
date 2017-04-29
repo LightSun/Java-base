@@ -1,9 +1,9 @@
 package com.heaven7.java.base.test;
 
+import com.heaven7.java.sync.SyncCallable;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import com.heaven7.java.sync.SyncCallable;
 /**
  */
 public class SyncCallableTest {
@@ -23,7 +23,7 @@ public class SyncCallableTest {
 			}
 		};
 
-		SyncCallable<String> sr = new SyncCallable<String>(task);
+		final SyncCallable<String> sr = new SyncCallable<String>(task);
 		for(int i = 0; i < 5 ; i++){
 			final int index = i;
 			new Thread(new Runnable() {

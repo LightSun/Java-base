@@ -2,7 +2,7 @@ package com.heaven7.java.sync;
 
 /**
  * created if occurs exception when call sync
- * @author don
+ * @author heaven7
  *
  */
 public final class SyncException extends RuntimeException{

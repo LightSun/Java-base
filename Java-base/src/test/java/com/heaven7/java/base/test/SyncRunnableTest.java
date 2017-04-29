@@ -15,7 +15,7 @@ public class SyncRunnableTest {
 			}
 		};
 
-		SyncRunnable sr = new SyncRunnable(task);
+		final SyncRunnable sr = new SyncRunnable(task);
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
