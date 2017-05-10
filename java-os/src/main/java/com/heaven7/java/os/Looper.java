@@ -1,17 +1,26 @@
 package com.heaven7.java.os;
 
 public class Looper {
-	private static final String TAG = "Looper";
+	
+	//private static final String TAG = "Looper";
+	private static final Printer DEFAULT_PRINTER = new DefaultPrinter();
 
     // sThreadLocal.get() will return null unless you've called prepare().
-    static final ThreadLocal<Looper> sThreadLocal = new ThreadLocal<Looper>();
+	private static final ThreadLocal<Looper> sThreadLocal = new ThreadLocal<Looper>();
     private static Looper sMainLooper;  // guarded by Looper.class
 
     final MessageQueue mQueue;
-    final Thread mThread;
+    private final Thread mThread;
 
-    private Printer mLogging;
-    private long mTraceTag;
+    Printer mLogging = DEFAULT_PRINTER;
+    long mTraceTag;
+    
+
+    private Looper(boolean quitAllowed) {
+        mQueue = new MessageQueue(quitAllowed, mLogging);
+        mThread = Thread.currentThread();
+    }
+
 
      /** Initialize the current thread as a looper.
       * This gives you a chance to create handlers that then reference
@@ -28,6 +37,7 @@ public class Looper {
             throw new RuntimeException("Only one Looper may be created per thread");
         }
         sThreadLocal.set(new Looper(quitAllowed));
+        //start loop.
     }
 
     /**
@@ -133,11 +143,6 @@ public class Looper {
         return myLooper().mQueue;
     }
 
-    private Looper(boolean quitAllowed) {
-        mQueue = new MessageQueue(quitAllowed);
-        mThread = Thread.currentThread();
-    }
-
     /**
      * Returns true if the current thread is this looper's thread.
      */
@@ -156,6 +161,7 @@ public class Looper {
      */
     public void setMessageLogging(Printer printer) {
         mLogging = printer;
+        mQueue.setMessageLogging(printer);
     }
 
     /** {@hide} */
@@ -223,7 +229,7 @@ public class Looper {
      * @param pw A printer to receive the contents of the dump. @NonNull
      * @param prefix A prefix to prepend to each line which is printed. @NonNull.
      */
-    public void dump(Printer pw,  String prefix) {
+    /*public*/ void dump(Printer pw,  String prefix) {
         pw.println(prefix + toString());
         mQueue.dump(pw, prefix + "  ");
     }

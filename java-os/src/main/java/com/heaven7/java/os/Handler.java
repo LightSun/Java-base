@@ -679,6 +679,11 @@ public class Handler {
 		return mLooper;
 	}
 
+	/**
+	 * dump log
+	 * @param pw the printer
+	 * @param prefix the prefix
+	 */
 	public final void dump(Printer pw, String prefix) {
 		pw.println(prefix + this + " @ " + System.currentTimeMillis());
 		if (mLooper == null) {

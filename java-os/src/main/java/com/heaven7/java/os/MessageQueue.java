@@ -2,7 +2,7 @@ package com.heaven7.java.os;
 
 import java.util.ArrayList;
 
-public class MessageQueue {
+/*public*/ class MessageQueue {
 
 	private static final String TAG = "MessageQueue";
 	private static final boolean DEBUG = true;
@@ -10,6 +10,7 @@ public class MessageQueue {
 	private final ArrayList<IdleHandler> mIdleHandlers = new ArrayList<IdleHandler>();
 	private final boolean mQuitAllowed;
 	private IdleHandler[] mPendingIdleHandlers;
+	private Printer mLogging;
 
 	private Message mMessages;
 	private boolean mQuitting;
@@ -17,24 +18,14 @@ public class MessageQueue {
 	// Indicates whether next() is blocked waiting in pollOnce() with a non-zero
 	// timeout.
 	private boolean mBlocked;
-	private Printer mLogging;
 	private int mNextBarrierToken;
 
-	public MessageQueue(boolean quitAllowed) {
-		mQuitAllowed = quitAllowed;
+	public MessageQueue(boolean quitAllowed, Printer printer) {
+		this.mQuitAllowed = quitAllowed;
+		this.mLogging = printer;
 	}
 
-	/**
-	 * Control logging of messages as they are processed by this Looper. If
-	 * enabled, a log message will be written to <var>printer</var> at the
-	 * beginning and ending of each message dispatch, identifying the target
-	 * Handler and message contents.
-	 *
-	 * @param printer
-	 *            A Printer object that will receive log messages, or null to
-	 *            disable message logging. nullable.
-	 */
-	public void setMessageLogging(Printer printer) {
+	/*public*/ void setMessageLogging(Printer printer) {
 		mLogging = printer;
 	}
 
@@ -149,9 +140,7 @@ public class MessageQueue {
 							mMessages = msg.next;
 						}
 						msg.next = null;
-						if (DEBUG && mLogging != null) {
-							mLogging.info(TAG, "next", "Returning message: " + msg);
-						}
+						mLogging.info(TAG, "next", "Returning message: " + msg);
 						msg.markInUse();
 						return msg;
 					}
@@ -163,6 +152,7 @@ public class MessageQueue {
 				// Process the quit message now that all pending messages have
 				// been handled.
 				if (mQuitting) {
+					//dispose();
 					return null;
 				}
 
