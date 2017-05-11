@@ -5,7 +5,6 @@ import java.util.ArrayList;
 /*public*/ class MessageQueue {
 
 	private static final String TAG = "MessageQueue";
-	private static final boolean DEBUG = true;
 
 	private final ArrayList<IdleHandler> mIdleHandlers = new ArrayList<IdleHandler>();
 	private final boolean mQuitAllowed;

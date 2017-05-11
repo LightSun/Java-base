@@ -2,7 +2,6 @@ package com.heaven7.java.os;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class Message {
 
@@ -52,7 +51,7 @@ public class Message {
      * only valid for messages posted by a {@link Messenger}; otherwise,
      * it will be -1.
      */
-    public int sendingUid = -1;
+   // public int sendingUid = -1;
 
     /** If set message is in use.
      * This flag is set when the message is enqueued and remains set while it
@@ -121,9 +120,13 @@ public class Message {
         m.arg2 = orig.arg2;
         m.obj = orig.obj;
        // m.replyTo = orig.replyTo;
-        m.sendingUid = orig.sendingUid;
+        //m.sendingUid = orig.sendingUid;
         if (orig.data != null) {
-            m.data = (Cloneable) orig.data.clone();
+        	if(orig.data instanceof Cloneable){
+               m.data = (Cloneable) orig.data.clone();
+        	}else{
+        		m.data = orig.data;
+        	}
         }
         m.target = orig.target;
         m.callback = orig.callback;
@@ -263,7 +266,7 @@ public class Message {
         arg2 = 0;
         obj = null;
        // replyTo = null;
-        sendingUid = -1;
+       // sendingUid = -1;
         when = 0;
         target = null;
         callback = null;
@@ -290,10 +293,14 @@ public class Message {
         this.arg2 = o.arg2;
         this.obj = o.obj;
         //this.replyTo = o.replyTo;
-        this.sendingUid = o.sendingUid;
+       // this.sendingUid = o.sendingUid;
 
         if (o.data != null) {
-            this.data = (Cloneable) o.data.clone();
+        	if(o.data instanceof Cloneable){
+                this.data = (Cloneable) o.data.clone();
+        	}else{
+        		this.data = o.data;
+        	}
         } else {
             this.data = null;
         }
