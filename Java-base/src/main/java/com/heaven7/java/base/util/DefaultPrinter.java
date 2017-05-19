@@ -1,10 +1,23 @@
-package com.heaven7.java.os;
+package com.heaven7.java.base.util;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
+/**
+ * the default printer.
+ * @author heaven7
+ * @since 1.0.2
+ * @see Printer
+ */
 public class DefaultPrinter implements Printer{
-
+	
+	private static DefaultPrinter sPrinter;
+	
+	/**
+	 * get an instance of DefaultPrinter.
+	 * @return default printer
+	 */
+	public static DefaultPrinter getDefault(){
+		return sPrinter !=null ? sPrinter : (sPrinter = new DefaultPrinter());
+	}
+	
 	@Override
 	public void println(String x) {
 		System.out.println(x);
@@ -12,7 +25,7 @@ public class DefaultPrinter implements Printer{
 
 	@Override
 	public void warn(String tag, String msg, Throwable t) {
-		System.err.println(tag + " >>> " + msg + toString(t));
+		System.err.println(tag + " >>> " + msg + " >>> " + Throwables.getStackTraceAsString(t));
 	}
 
 	@Override
@@ -30,20 +43,5 @@ public class DefaultPrinter implements Printer{
 		System.out.println(tag + "__DEBUG__ >>> called " + method + "(): " + msg);
 	}
 	
-	public static String toString(Throwable t) {
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-
-		t.printStackTrace(pw);
-		Throwable cause = t.getCause();
-		while (cause != null) {
-			cause.printStackTrace(pw);
-			cause = cause.getCause();
-		}
-		pw.flush();
-		String data = sw.toString();
-		pw.close();
-		return data;
-	}
 
 }

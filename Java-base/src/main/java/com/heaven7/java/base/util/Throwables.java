@@ -35,6 +35,7 @@ import com.heaven7.java.base.anno.Nullable;
  *
  * @author Kevin Bourrillion
  * @author Ben Yu
+ * @author heaven7
  * @since 1.0
  */
 public final class Throwables {
@@ -216,8 +217,7 @@ public final class Throwables {
         throwable.printStackTrace(new PrintWriter(stringWriter));
         return stringWriter.toString();
     }
-
-
+    
     public static void checkNull(Object obj) {
         if (obj == null) {
             throw new NullPointerException();

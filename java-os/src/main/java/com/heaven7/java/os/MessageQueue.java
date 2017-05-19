@@ -165,7 +165,7 @@ import java.util.ArrayList;
 				}
 				if (pendingIdleHandlerCount <= 0) {
 					// No idle handlers to run. Loop and wait some more.
-					mBlocked = true;
+ 					mBlocked = true;
 					continue;
 				}
 

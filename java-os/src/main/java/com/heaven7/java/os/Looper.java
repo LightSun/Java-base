@@ -76,11 +76,6 @@ public class Looper {
         }
         final MessageQueue queue = me.mQueue;
 
-        // Make sure the identity of this thread is that of the local process,
-        // and keep track of what that identity token actually is.
-        /*Binder.clearCallingIdentity();
-        final long ident = Binder.clearCallingIdentity();*/
-
         for (;;) {
             Message msg = queue.next(); // might block
             if (msg == null) {
@@ -110,17 +105,6 @@ public class Looper {
             if (logging != null) {
                 logging.println("<<<<< Finished to " + msg.target + " " + msg.callback);
             }
-
-            // Make sure that during the course of dispatching the
-            // identity of the thread wasn't corrupted.
-           /* final long newIdent = Binder.clearCallingIdentity();
-            if (ident != newIdent) {
-                Log.wtf(TAG, "Thread identity changed from 0x"
-                        + Long.toHexString(ident) + " to 0x"
-                        + Long.toHexString(newIdent) + " while dispatching to "
-                        + msg.target.getClass().getName() + " "
-                        + msg.callback + " what=" + msg.what);
-            }*/
 
             msg.recycleUnchecked();
         }
@@ -164,7 +148,6 @@ public class Looper {
         mQueue.setMessageLogging(printer);
     }
 
-    /** {@hide} */
     public void setTraceTag(long traceTag) {
         mTraceTag = traceTag;
     }

@@ -1,6 +1,6 @@
 package com.heaven7.java.os;
 
-public class Trace {
+/*public*/ class Trace {
 
 	public static boolean isTagEnabled(long traceTag) {
 		// TODO Auto-generated method stub

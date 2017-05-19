@@ -18,7 +18,12 @@ public class HandlerTest extends TestCase{
 	protected void setUp() throws Exception {
 		super.setUp();
 		//initChildThread();
-		initHandlerThread();
+		//initHandlerThread();
+		testMainLooper();
+	}
+	
+	public void testEmpty(){
+		
 	}
 
 	private void initHandlerThread() {
@@ -62,15 +67,9 @@ public class HandlerTest extends TestCase{
 	
 	private void testMainLooper(){
 		//main thread bug. made block for ever...
-		/*Looper.prepareMainLooper();
-		Handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
-			@Override
-			public boolean handleMessage(Message msg) {
-				System.out.println("HandlerTest: " + msg);
-				return false;
-			}
-		});
-		Looper.loop();*/
+		Looper.prepareMainLooper();
+		Looper.loop();
+		System.out.println("testMainLooper");
 	}
 	
 	//BUG
