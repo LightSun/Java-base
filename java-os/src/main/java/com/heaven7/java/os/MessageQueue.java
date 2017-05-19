@@ -2,6 +2,8 @@ package com.heaven7.java.os;
 
 import java.util.ArrayList;
 
+import com.heaven7.java.base.util.Printer;
+
 /*public*/ class MessageQueue {
 
 	private static final String TAG = "MessageQueue";

@@ -1,10 +1,12 @@
 package com.heaven7.java.os;
 
+import com.heaven7.java.base.util.DefaultPrinter;
+import com.heaven7.java.base.util.Printer;
+
 public class Looper {
 	
 	//private static final String TAG = "Looper";
-	private static final Printer DEFAULT_PRINTER = new DefaultPrinter();
-
+	
     // sThreadLocal.get() will return null unless you've called prepare().
 	private static final ThreadLocal<Looper> sThreadLocal = new ThreadLocal<Looper>();
     private static Looper sMainLooper;  // guarded by Looper.class
@@ -12,7 +14,7 @@ public class Looper {
     final MessageQueue mQueue;
     private final Thread mThread;
 
-    Printer mLogging = DEFAULT_PRINTER;
+    Printer mLogging = DefaultPrinter.getDefault();
     long mTraceTag;
     
 
