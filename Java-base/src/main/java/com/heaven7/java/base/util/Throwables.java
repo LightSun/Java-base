@@ -218,6 +218,10 @@ public final class Throwables {
         return stringWriter.toString();
     }
     
+    /**
+     * check the target object is null .
+     * @param obj the target object
+     */
     public static void checkNull(Object obj) {
         if (obj == null) {
             throw new NullPointerException();
@@ -227,7 +231,7 @@ public final class Throwables {
     /**
      * check the array if is empty.
      *
-     * @param <T> the component tye of array.
+     * @param <T> the component type of array.
      * @param ts  the array
      */
     public static <T> void checkEmpty(T[] ts) {
@@ -239,15 +243,22 @@ public final class Throwables {
         }
     }
 
-    public static <T> void checkEmpty(Collection<T> collection) {
-        if (collection == null) {
+    /**
+     * check the target Collection is empty .
+     * @param coll the target Collection
+     */
+    public static <T> void checkEmpty(Collection<T> coll) {
+        if (coll == null) {
             throw new NullPointerException();
         }
-        if (collection.size() == 0) {
+        if (coll.size() == 0) {
             throw new IllegalArgumentException();
         }
     }
-
+    /**
+     * check the target map is empty .
+     * @param map the target map
+     */
     public static <K, V> void checkEmpty(java.util.Map<K, V> map) {
         if (map == null) {
             throw new NullPointerException();
@@ -257,6 +268,10 @@ public final class Throwables {
         }
     }
 
+    /**
+     * check the target int array is empty .
+     * @param arr the target array
+     */
     public static void checkEmpty(int[] arr) {
         if (arr == null) {
             throw new NullPointerException();
@@ -264,5 +279,23 @@ public final class Throwables {
         if (arr.length == 0) {
             throw new IllegalArgumentException();
         }
+    }
+    /**
+     * check the target value is non positive .
+     * @param value the value
+     */
+    public static void checkNonPositiveValue(int value) {
+       if(value <= 0 ){
+    	   throw new IllegalArgumentException();
+       }
+    }
+    /**
+     * check the target value is negative.
+     * @param value the value
+     */
+    public static void checkNegativeValue(int value) {
+    	if(value < 0 ){
+    		throw new IllegalArgumentException();
+    	}
     }
 }
