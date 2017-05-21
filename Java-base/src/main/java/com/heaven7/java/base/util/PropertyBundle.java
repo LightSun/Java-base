@@ -13,7 +13,6 @@ public class PropertyBundle extends Properties {
 
 	public PropertyBundle() {
 	}
-
 	public PropertyBundle(Properties prop) {
 		super(prop);
 	}
