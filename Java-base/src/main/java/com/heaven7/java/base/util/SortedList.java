@@ -20,6 +20,8 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+
+import com.heaven7.java.base.anno.ThreadNotSafe;
 //copy from android
 /**
  * A Sorted list implementation that can keep items in order and also notify for changes in the
@@ -34,6 +36,7 @@ import java.util.Comparator;
  * You can control the order of items and change notifications via the {@link Callback} parameter.
  */
 @SuppressWarnings("unchecked")
+@ThreadNotSafe
 public class SortedList<T> {
 
     /**

@@ -35,11 +35,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.heaven7.java.base.anno.ThreadNotSafe;
+
 /**
  * SparseArrays map integers to Objects.  Unlike a normal array of Objects,
  * there can be gaps in the indices.  It is intended to be more efficient
  * than using a HashMap to map Integers to Objects.
  */
+@ThreadNotSafe
 public class SparseArray<E> {
     private static final Object DELETED = new Object();
     private boolean mGarbage = false;

@@ -2,7 +2,13 @@ package com.heaven7.java.base.util;
 
 
 import java.util.Arrays;
-
+/**
+ * a class help do some common function. eg: toString.
+ * @author heaven7
+ * @since 1.0.2
+ * @see ToStringHelper
+ * @see #toStringHelper(Object)
+ */
 public final class Objects {
     private Objects() {
     }
@@ -34,7 +40,6 @@ public final class Objects {
         if(start == -1) {
             start = name.lastIndexOf(46);
         }
-
         return name.substring(start + 1);
     }
 
