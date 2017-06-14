@@ -36,6 +36,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.heaven7.java.base.anno.ThreadNotSafe;
+import static com.heaven7.java.base.util.SearchUtils.binarySearch;
 
 /**
  * SparseArrays map integers to Objects.  Unlike a normal array of Objects,
@@ -367,7 +368,7 @@ public class SparseArray<E> {
         }
     }
 
-    private static int binarySearch(int[] a, int start, int len, int key) {
+    /*private static int binarySearch(int[] a, int start, int len, int key) {
         int high = start + len, low = start - 1, guess;
 
         while (high - low > 1) {
@@ -385,7 +386,7 @@ public class SparseArray<E> {
             return high;
         else
             return ~high;
-    }
+    }*/
 
     /**
      * @return a read-only list of the values in this SparseArray which are in ascending order, based on their
