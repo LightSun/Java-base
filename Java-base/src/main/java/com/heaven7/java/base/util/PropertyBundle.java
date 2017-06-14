@@ -1,5 +1,6 @@
 package com.heaven7.java.base.util;
 
+import java.io.Serializable;
 import java.util.Properties;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Properties;
  * @author heaven7
  * @since 1.0.3
  */
-public class PropertyBundle extends Properties {
+public class PropertyBundle extends Properties implements Cloneable, Serializable{
 
 	private static final long serialVersionUID = -8811397251450482904L;
 
@@ -54,5 +55,10 @@ public class PropertyBundle extends Properties {
 		}catch(ClassCastException e){
 			throw new IllegalStateException("wrong mapping for the key = " + key);
 		}
+	}
+	
+	@Override
+	public synchronized Object clone() {
+		return (PropertyBundle)super.clone();
 	}
 }
