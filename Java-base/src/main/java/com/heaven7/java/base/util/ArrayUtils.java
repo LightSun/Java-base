@@ -10,7 +10,7 @@ import java.util.List;
  * @author heaven7
  * @since 1.0.5
  */
-public class ArrayUtils {
+public final class ArrayUtils {
 
 	/**
 	 * convert the collection to int array.
