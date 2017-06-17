@@ -10,34 +10,45 @@ import java.util.List;
  * @since 1.0.5
  */
 public final class SearchUtils {
-	
-	
+
 	/**
-	 *  binary search the key in the array. return the index of it. if index < 0,
+	 * binary search the key in the array. return the index of it. if index < 0,
 	 * means the element is not in the array, and the right insert position =
 	 * -(index +1 ) . if index >=0 . right
-	 * @param <T> the type to compare
-	 * @param list the list 
-	 * @param key the key to search
-	 * @param comparator the comparator, can't be null.
+	 * 
+	 * @param <T>
+	 *            the type to compare
+	 * @param list
+	 *            the list
+	 * @param key
+	 *            the key to search
+	 * @param comparator
+	 *            the comparator, can't be null.
 	 * @return the index. if index < 0, means the element is not in the array,
 	 *         and the right insert position = -(index +1 ) . if index >=0 .
 	 *         right
 	 */
 	public static <T> int binarySearch(List<T> list, T key, Comparator<T> comparator) {
-		return binarySearch(list, 0, list.size() ,key, comparator);
+		return binarySearch(list, 0, list.size(), key, comparator);
 	}
 
 	/**
-	 *  binary search the key in the array. return the index of it. if index < 0,
+	 * binary search the key in the array. return the index of it. if index < 0,
 	 * means the element is not in the array, and the right insert position =
 	 * -(index +1 ) . if index >=0 . right
-	 * @param <T> the type to compare
-	 * @param list the list 
-	 * @param start the start index of list
-	 * @param len the length of search in list.
-	 * @param key the key to search
-	 * @param comparator the comparator,can't be null.
+	 * 
+	 * @param <T>
+	 *            the type to compare
+	 * @param list
+	 *            the list
+	 * @param start
+	 *            the start index of list
+	 * @param len
+	 *            the length of search in list.
+	 * @param key
+	 *            the key to search
+	 * @param comparator
+	 *            the comparator,can't be null.
 	 * @return the index. if index < 0, means the element is not in the array,
 	 *         and the right insert position = -(index +1 ) . if index >=0 .
 	 *         right
@@ -80,6 +91,7 @@ public final class SearchUtils {
 	public static int binarySearch(int[] a, int key) {
 		return binarySearch(a, 0, a.length, key);
 	}
+
 	/**
 	 * binary search the key in the array. return the index of it. if index < 0,
 	 * means the element is not in the array, and the right insert position =

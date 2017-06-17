@@ -8,7 +8,7 @@ import com.heaven7.java.base.util.SearchUtils;
 
 import junit.framework.TestCase;
 
-public class BinarySearchTest extends TestCase{
+public class SearchTest extends TestCase{
 
 	
 	public void testAnyType(){
@@ -19,7 +19,7 @@ public class BinarySearchTest extends TestCase{
 		list.add(new Bean("g"));
 		list.add(new Bean("j"));
 		list.add(new Bean("m"));
-		Comparator<Bean> comparator = new Comparator<BinarySearchTest.Bean>() {
+		Comparator<Bean> comparator = new Comparator<SearchTest.Bean>() {
 			@Override
 			public int compare(Bean o1, Bean o2) {
 				return o1.txt.compareTo(o2.txt);
