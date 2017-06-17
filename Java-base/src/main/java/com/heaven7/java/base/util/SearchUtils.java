@@ -26,7 +26,7 @@ public final class SearchUtils {
 	 *            the comparator, can't be null.
 	 * @return the index. if index < 0, means the element is not in the array,
 	 *         and the right insert position = -(index +1 ) . if index >=0 .
-	 *         right
+	 *         right. if list.size() == 0 . return -1. 
 	 */
 	public static <T> int binarySearch(List<T> list, T key, Comparator<T> comparator) {
 		return binarySearch(list, 0, list.size(), key, comparator);
@@ -40,7 +40,7 @@ public final class SearchUtils {
 	 * @param <T>
 	 *            the type to compare
 	 * @param list
-	 *            the list
+	 *            the sorted list (sort ascending)
 	 * @param start
 	 *            the start index of list
 	 * @param len
@@ -81,7 +81,7 @@ public final class SearchUtils {
 	 * -(index +1 ) . if index >=0 . right
 	 * 
 	 * @param a
-	 *            the sorted array
+	 *            the sorted array. (sort ascending)
 	 * @param key
 	 *            the target key.
 	 * @return the index. if index < 0, means the element is not in the array,

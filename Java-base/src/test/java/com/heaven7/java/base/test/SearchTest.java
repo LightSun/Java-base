@@ -11,6 +11,17 @@ import junit.framework.TestCase;
 public class SearchTest extends TestCase{
 
 	
+	public void testEmpty(){
+		List<Bean> list = new ArrayList<>();
+		Comparator<Bean> comparator = new Comparator<SearchTest.Bean>() {
+			@Override
+			public int compare(Bean o1, Bean o2) {
+				return o1.txt.compareTo(o2.txt);
+			}
+		};
+		assertEquals(-1, SearchUtils.binarySearch(list, new Bean("b"), comparator));
+	}
+	
 	public void testAnyType(){
 		List<Bean> list = new ArrayList<>();
 		list.add(new Bean("a"));
@@ -33,6 +44,11 @@ public class SearchTest extends TestCase{
 		assertIndex(6, SearchUtils.binarySearch(list, 0, size, new Bean("o"), comparator));
 	}
 	
+	public void testReverseIntArray(){
+		int[] arr = new int []{9, 8 ,6, 4, 1};
+		int index = SearchUtils.binarySearch(arr, 3);
+		System.out.println("index = " + index); // -1
+	}
 	public void testintArray(){
 		int[] arr = new int []{1,4,6,8,9};
 		int len = arr.length;
