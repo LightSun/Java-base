@@ -1,7 +1,7 @@
 package com.heaven7.java.base.util;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -20,8 +20,11 @@ public final class ArrayUtils {
 	 * @return the list
 	 * @since 1.0.6
 	 */
-	public static <T> List<T> toList(T t){
-		return Arrays.asList(t);
+	@SuppressWarnings("unchecked")
+	public static <T> T[] toArray(T t){
+		Object array = Array.newInstance(t.getClass(), 1);
+		Array.set(array, 0, t);
+		return (T[]) array;
 	}
 	/**
 	 * make the all object to a list.
@@ -31,8 +34,12 @@ public final class ArrayUtils {
 	 * @return the list
 	 * @since 1.0.6
 	 */
-	public static <T> List<T> toList(T t1, T t2){
-		return Arrays.asList(t1, t2);
+	@SuppressWarnings("unchecked")
+	public static <T> T[] toArray(T t1, T t2){
+		Object array = Array.newInstance(t1.getClass(), 2);
+		Array.set(array, 0, t1);
+		Array.set(array, 1, t2);
+		return (T[]) array;
 	}
 	/**
 	 * make the all object to a list.
@@ -43,8 +50,32 @@ public final class ArrayUtils {
 	 * @return the list
 	 * @since 1.0.6
 	 */
-	public static <T> List<T> toList(T t1, T t2, T t3){
-		return Arrays.asList(t1, t2, t3);
+	@SuppressWarnings("unchecked")
+	public static <T> T[] toArray(T t1, T t2, T t3){
+		Object array = Array.newInstance(t1.getClass(), 3);
+		Array.set(array, 0, t1);
+		Array.set(array, 1, t2);
+		Array.set(array, 2, t3);
+		return (T[]) array;
+	}
+	/**
+	 * convert the list to array.
+	 * @param <T> the element type
+	 * @param list the list
+	 * @return the array.
+	 * @since 1.0.6
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T[] toArray(List<T> list){
+		if(list == null || list.isEmpty()){
+			return null;
+		}
+		final int size = list.size();
+		Object array = Array.newInstance(list.get(0).getClass(), size);
+		for (int i = size - 1 ; i >=0 ; i --){
+			Array.set(array, i, list.get(i));
+		}
+		return (T[]) array;
 	}
 	/**
 	 * convert the collection to int array.
