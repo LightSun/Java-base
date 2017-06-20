@@ -82,7 +82,7 @@ public final class ArrayUtils {
 	 * @param coll the integer collection
 	 * @return the int array.
 	 */
-	public static int[] toArray(Collection<Integer> coll){
+	public static int[] toIntArray(Collection<Integer> coll){
 		if(coll == null || coll.isEmpty()){
 			return null;
 		}
