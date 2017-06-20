@@ -1,17 +1,51 @@
 package com.heaven7.java.base.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 /**
- * the common tool of array.
+ * the common tool of array/list.
  * @author heaven7
  * @since 1.0.5
  */
 public final class ArrayUtils {
 
+	/**
+	 * make the object to a list.
+	 * @param <T> the object type
+	 * @param t the object
+	 * @return the list
+	 * @since 1.0.6
+	 */
+	public static <T> List<T> toList(T t){
+		return Arrays.asList(t);
+	}
+	/**
+	 * make the all object to a list.
+	 * @param <T> the object type
+	 * @param t1 the first object
+	 * @param t2 the second object
+	 * @return the list
+	 * @since 1.0.6
+	 */
+	public static <T> List<T> toList(T t1, T t2){
+		return Arrays.asList(t1, t2);
+	}
+	/**
+	 * make the all object to a list.
+	 * @param <T> the object type
+	 * @param t1 the first object
+	 * @param t2 the second object
+	 * @param t3 the third object
+	 * @return the list
+	 * @since 1.0.6
+	 */
+	public static <T> List<T> toList(T t1, T t2, T t3){
+		return Arrays.asList(t1, t2, t3);
+	}
 	/**
 	 * convert the collection to int array.
 	 * @param coll the integer collection
