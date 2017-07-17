@@ -281,19 +281,38 @@ public class SparseArray<E> {
      * Returns an index for which {@link #valueAt} would return the
      * specified key, or a negative number if no keys map to the
      * specified value.
-     * Beware that this is a linear search, unlike lookups by key,
+     * <p>Beware that this is a linear search, unlike lookups by key,
      * and that multiple keys can map to the same value and this will
      * find only one of them.
+     * <p>Note also that unlike most collections' {@code indexOf} methods,
+     * this method compares values using {@code ==} rather than {@code equals}.
      */
     public int indexOfValue(E value) {
+        return indexOfValue(value, true);
+    }
+    
+    /**
+     * Returns an index for which {@link #valueAt} would return the
+     * specified key, or a negative number if no keys map to the
+     * specified value.
+     * @param value the value
+     * @param identity true .if only use '==' to judge. false include use 'equals()' to judge.
+     * @return the index of value
+     * @since 1.0.6
+     */
+    public int indexOfValue(E value, boolean identity) {
         if (mGarbage) {
             gc();
         }
-
-        for (int i = 0; i < mSize; i++)
-            if (mValues[i] == value)
+        for (int i = 0; i < mSize; i++){
+        	
+        	if (mValues[i] == value)
                 return i;
-
+        	if(!identity){
+        		 if (mValues[i].equals(value))
+                     return i;
+        	}
+        }
         return -1;
     }
 
