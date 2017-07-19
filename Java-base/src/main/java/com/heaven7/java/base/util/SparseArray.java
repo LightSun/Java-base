@@ -111,6 +111,27 @@ public class SparseArray<E> {
     }
     
     /**
+     * get the value and remove mapping.
+     * @param key the key 
+     * @return the previous value
+     * @since 1.0.7
+     */
+    @SuppressWarnings("unchecked")
+	public E getAndRemove(int key){
+    	int i = binarySearch(mKeys, 0, mSize, key);
+
+    	Object val = null;
+        if (i >= 0) {
+            if (mValues[i] != DELETED) {
+            	val = mValues[i];
+                mValues[i] = DELETED;
+                mGarbage = true;
+            }
+        }
+        return (E) val;
+    }
+    
+    /**
      * Removes the mapping at the specified index.
      */
     public void removeAt(int index) {
@@ -306,8 +327,9 @@ public class SparseArray<E> {
         }
         for (int i = 0; i < mSize; i++){
         	
-        	if (mValues[i] == value)
+        	if (mValues[i] == value){
                 return i;
+        	}
         	if(!identity){
         		 if (mValues[i].equals(value))
                      return i;
