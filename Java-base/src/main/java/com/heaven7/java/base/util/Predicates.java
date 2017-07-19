@@ -1,6 +1,6 @@
 package com.heaven7.java.base.util;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.SortedMap;
 /**
  * some useful methods of predicate.
@@ -17,7 +17,7 @@ public final class Predicates {
 	public static boolean isTrue(Boolean value) {
 		return value != null && value;
 	}
-	public static <E> boolean isEmpty(List<E> list) {
+	public static <E> boolean isEmpty(Collection<E> list) {
 		return list == null || list.size() == 0;
 	}
 	public static boolean isEmpty(int[] arr) {
