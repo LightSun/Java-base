@@ -2,6 +2,11 @@ package com.heaven7.java.api.test;
 
 import java.util.stream.IntStream;
 
+/**
+ * this demo show use jdk8 feature for mathematical.
+ * see file /files/streamForMathematical.png
+ * @author heaven7
+ */
 public class SteamsForMathematicalTest {
 
 	public static void main(String[] args) {
