@@ -32,7 +32,7 @@ publish {
     userOrg = 'lightsun' //bintray user name
     groupId = 'com.heaven7.java.base'
     artifactId = 'Java-base'
-    publishVersion = '1.0.7'
+    publishVersion = '1.0.8'
     desc = 'this is a base java lib . '
     website = 'https://github.com/LightSun/Java-base'
 }
