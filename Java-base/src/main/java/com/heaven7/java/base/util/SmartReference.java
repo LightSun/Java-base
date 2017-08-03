@@ -39,12 +39,20 @@ public class SmartReference<T> {
 	 * @see #tryWeakReference()
 	 */
 	public final T get(){
+		T t ;
 		if(mT == null){
-			return mWeakRef != null ? mWeakRef.get() : null;
+			t = mWeakRef != null ? mWeakRef.get() : null;
+		}else{
+			t = mT;
 		}
-		return mT;
+		if(t != null && shouldDestroyReference(t)){
+			mWeakRef = null;
+			mT = null;
+			return null;
+		}
+		return t;
 	}
-	
+
 	/**
 	 * indicate the reference object is alive or not, that means has been killed by gc).
 	 * @return true if the reference object is alive , false otherwise.
@@ -107,6 +115,15 @@ public class SmartReference<T> {
 	protected boolean shouldWeakReference(T t) {
 		return false;
 	}
-	
+	/**
+	 * indicate should destroy the reference of object or not. this method is called by {@linkplain #get()}.
+	 * @param t the object
+	 * @return true if should destroy it. false otherwise.
+	 * @see #get()
+	 * @since 1.0.9
+	 */
+	protected boolean shouldDestroyReference(T t) {
+		return false;
+	}
 	
 }
