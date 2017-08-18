@@ -1,14 +1,16 @@
 package com.heaven7.java.api.test.callsite;
 
 import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandleProxies;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.lang.invoke.SwitchPoint;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- *http://blog.csdn.net/zhangrongchao_/article/details/41603887
+ * http://blog.csdn.net/zhangrongchao_/article/details/41603887
  */
 public class MethodHandleTest2 {
 
@@ -25,9 +27,88 @@ public class MethodHandleTest2 {
 			test.catchExceptions();
 			filterReturnValue();
 			test.invoker();
+			invokerTransform();
+			test.useMethodHandleProxy();
+			testAccessControl();
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void useSwitchPoint() throws Throwable {
+		MethodHandles.Lookup lookup = MethodHandles.lookup();
+		MethodType type = MethodType.methodType(int.class, int.class, int.class);
+		MethodHandle mhMax = lookup.findStatic(Math.class, "max", type);
+		MethodHandle mhMin = lookup.findStatic(Math.class, "min", type);
+		//like guard: if ...else ...
+		SwitchPoint sp = new SwitchPoint();
+		MethodHandle mhNew = sp.guardWithTest(mhMin, mhMax);
+		mhNew.invoke(3, 4); // 值为3
+		SwitchPoint.invalidateAll(new SwitchPoint[] { sp });
+		mhNew.invoke(3, 4); // 值为4
+	}
+
+	public static void testAccessControl() throws Throwable {
+		System.out.println("============== start testAccessControl() ==============");
+		new AccessControl().accessControl().invoke();
+	}
+
+	public static class AccessControl {
+		private void privateMethod() {
+			System.out.println("PRIVATE");
+		}
+
+		public MethodHandle accessControl() throws Throwable {
+			MethodHandles.Lookup lookup = MethodHandles.lookup();
+			MethodHandle mh = lookup.findSpecial(AccessControl.class, "privateMethod",
+					MethodType.methodType(void.class), AccessControl.class);
+			mh = mh.bindTo(this);
+			return mh;
+		}
+	}
+
+	public void doSomething() {
+		System.out.println("WORK");
+	}
+
+	/**
+	 * MethodHandleProxies 相当于把某方法。绑定到runnable实现中
+	 * 
+	 * @throws Throwable
+	 */
+	public void useMethodHandleProxy() throws Throwable {
+		System.out.println("============== start useMethodHandleProxy() ==============");
+
+		MethodHandles.Lookup lookup = MethodHandles.lookup();
+		MethodHandle mh = lookup.findVirtual(MethodHandleTest2.class, "doSomething", MethodType.methodType(void.class));
+		mh = mh.bindTo(this);
+		// 相当于把某方法。绑定到runnable实现中
+		Runnable runnable = MethodHandleProxies.asInterfaceInstance(Runnable.class, mh);
+		Thread t = new Thread(runnable);
+		t.start();
+		t.join(); // wait t finish
+	}
+
+	// invoker和exactInvoker对方法句柄变换的影响
+	public static void invokerTransform() throws Throwable {
+		System.out.println("============== start invokerTransform() ==============");
+		// substring: string(string, int, int)
+		MethodType typeInvoker = MethodType.methodType(String.class, String.class, int.class, int.class);
+		MethodHandle invoker = MethodHandles.exactInvoker(typeInvoker);
+
+		MethodHandles.Lookup lookup = MethodHandles.lookup();
+		// toUpperCase: string()
+		MethodHandle mhUpperCase = lookup.findVirtual(String.class, "toUpperCase", MethodType.methodType(String.class));
+		invoker = MethodHandles.filterReturnValue(invoker, mhUpperCase);
+
+		// string(string, int, int)
+		MethodType typeFind = MethodType.methodType(String.class, int.class, int.class);
+		MethodHandle mh1 = lookup.findVirtual(String.class, "substring", typeFind);
+		/**
+		 * 先调用substring(...) 再to uppercase.
+		 */
+		String result = (String) invoker.invoke(mh1, "Hello", 1, 4); // 值为“ELL”
+		System.out.println(result);
 	}
 
 	/**
@@ -39,20 +120,20 @@ public class MethodHandleTest2 {
 		System.out.println("============== start invoker() ==============");
 		MethodType typeInvoker = MethodType.methodType(String.class, Object.class, int.class, int.class);
 		MethodHandle invoker = MethodHandles.invoker(typeInvoker);
-		
+
 		MethodType typeFind = MethodType.methodType(String.class, int.class, int.class);
-		
+
 		MethodHandles.Lookup lookup = MethodHandles.lookup();
 		MethodHandle mh1 = lookup.findVirtual(String.class, "substring", typeFind);
 		MethodHandle mh2 = lookup.findVirtual(MethodHandleTest2.class, "testMethod", typeFind);
 		String result = (String) invoker.invoke(mh1, "Hello", 2, 3);
 		System.out.println(result);
-		
+
 		result = (String) invoker.invoke(mh2, this, 2, 3);
 		System.out.println(result);
 	}
-	
-	public String testMethod(int i1, int i2){
+
+	public String testMethod(int i1, int i2) {
 		return i1 + "__" + i2;
 	}
 
