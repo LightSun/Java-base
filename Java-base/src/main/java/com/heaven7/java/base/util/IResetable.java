@@ -5,6 +5,7 @@ package com.heaven7.java.base.util;
  * @author heaven7
  *
  */
+@Deprecated
 public interface IResetable {
 
 	/**
