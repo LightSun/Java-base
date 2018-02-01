@@ -188,19 +188,27 @@ public class SparseArray<E> {
 	/**
 	 * Adds a mapping from the specified key to the specified value, replacing
 	 * the previous mapping from the specified key if there was one.
+	 * @return the old value.
+	 * changed 1.1.1 return from void to E.
 	 */
-	public void put(int key, E value) {
+	@SuppressWarnings("unchecked")
+	public E put(int key, E value) {
 		int i = binarySearch(mKeys, 0, mSize, key);
 
 		if (i >= 0) {
+			Object old = mValues[i];
 			mValues[i] = value;
+			if(old == DELETED){
+                 return null;
+			}
+			return (E) old;
 		} else {
 			i = ~i;
 
 			if (i < mSize && mValues[i] == DELETED) {
 				mKeys[i] = key;
 				mValues[i] = value;
-				return;
+				return null;
 			}
 
 			if (mGarbage && mSize >= mKeys.length) {
@@ -234,6 +242,7 @@ public class SparseArray<E> {
 			mValues[i] = value;
 			mSize++;
 		}
+		return null;
 	}
 
 	/**
