@@ -15,7 +15,7 @@ public class Looper {
     private final Thread mThread;
 
     private Printer mLogging = DefaultPrinter.getDefault();
-    long mTraceTag;
+    private long mTraceTag;
     
 
     private Looper(boolean quitAllowed) {

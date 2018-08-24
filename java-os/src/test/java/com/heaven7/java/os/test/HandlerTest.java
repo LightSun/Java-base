@@ -87,6 +87,8 @@ public class HandlerTest extends TestCase{
 				}
 			}).start();
 		}
+		Message msg = mHandler.obtainMessage(5, "---------");
+		mHandler.sendMessageDelayed(msg, 5000);
 		System.out.println("test1 mark done");
 		try {
 			Thread.currentThread().join();
