@@ -14,7 +14,7 @@ public class Looper {
     final MessageQueue mQueue;
     private final Thread mThread;
 
-    Printer mLogging = DefaultPrinter.getDefault();
+    private Printer mLogging = DefaultPrinter.getDefault();
     long mTraceTag;
     
 

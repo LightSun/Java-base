@@ -2,6 +2,7 @@ package com.heaven7.java.os;
 
 import java.lang.reflect.Modifier;
 
+import com.heaven7.java.base.util.DefaultPrinter;
 import com.heaven7.java.base.util.Printer;
 
 public class Handler {
@@ -13,18 +14,19 @@ public class Handler {
 	 */
 	private static final boolean FIND_POTENTIAL_LEAKS = false;
 	private static final String TAG = "Handler";
-	private Printer mLogging;
+	private Printer mLogging = DefaultPrinter.getDefault();
 
 	/**
 	 * Callback interface you can use when instantiating a Handler to avoid
 	 * having to implement your own subclass of Handler.
-	 *
-	 * @param msg
-	 *            A {@link android.os.Message Message} object
-	 * @return True if no further handling is desired
 	 */
 	public interface Callback {
-		public boolean handleMessage(Message msg);
+		/**
+		 * called when message reached.
+		 * @param msg  A {@link  Message} object
+		 * @return True if no further handling is desired
+		 */
+		 boolean handleMessage(Message msg);
 	}
 
 	/**
@@ -108,7 +110,6 @@ public class Handler {
 	 * Asynchronous messages represent interrupts or events that do not require
 	 * global ordering with respect to synchronous messages. Asynchronous
 	 * messages are not subject to the synchronization barriers introduced by
-	 * {@link MessageQueue#enqueueSyncBarrier(long)}.
 	 *
 	 * @param async
 	 *            If true, the handler calls
@@ -132,7 +133,6 @@ public class Handler {
 	 * Asynchronous messages represent interrupts or events that do not require
 	 * global ordering with respect to synchronous messages. Asynchronous
 	 * messages are not subject to the synchronization barriers introduced by
-	 * {@link MessageQueue#enqueueSyncBarrier(long)}.
 	 *
 	 * @param callback
 	 *            The callback interface in which to handle messages, or null.
@@ -174,7 +174,6 @@ public class Handler {
 	 * Asynchronous messages represent interrupts or events that do not require
 	 * global ordering with respect to synchronous messages. Asynchronous
 	 * messages are not subject to the synchronization barriers introduced by
-	 * {@link MessageQueue#enqueueSyncBarrier(long)}.
 	 *
 	 * @param looper
 	 *            The looper, must not be null.

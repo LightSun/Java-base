@@ -1,9 +1,6 @@
 package com.heaven7.java.os.test;
 
-import com.heaven7.java.os.Handler;
-import com.heaven7.java.os.HandlerThread;
-import com.heaven7.java.os.Looper;
-import com.heaven7.java.os.Message;
+import com.heaven7.java.os.*;
 
 import junit.framework.TestCase;
 
@@ -17,15 +14,11 @@ public class HandlerTest extends TestCase{
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		//initChildThread();
+		initChildThread();
 		//initHandlerThread();
-		testMainLooper();
+		//testMainLooper();
 	}
 	
-	public void testEmpty(){
-		
-	}
-
 	private void initHandlerThread() {
 		mHt = new HandlerThread("ht");
 		mHt.start();
@@ -64,8 +57,8 @@ public class HandlerTest extends TestCase{
 			mLock.wait();
 		}
 	}
-	
-	private void testMainLooper(){
+
+	public void testMainLooper(){
 		//main thread bug. made block for ever...
 		Looper.prepareMainLooper();
 		Looper.loop();
@@ -74,7 +67,31 @@ public class HandlerTest extends TestCase{
 	
 	//BUG
 	public void test1(){
-		mHandler.obtainMessage(5).sendToTarget();
-		System.out.println("test1 done");
+    mHandler.getLooper()
+        .getQueue()
+        .addIdleHandler(
+            new MessageQueue.IdleHandler() {
+              @Override
+			  public boolean queueIdle() {
+                System.out.println("idle now ...");
+               // mHandler.obtainMessage(5, "from queueIdle-----").sendToTarget();
+                return true;
+              }
+            });
+		for (int i = 0 ; i < 3 ; i ++){
+			final String msg = "msg___" + i;
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.obtainMessage(5, msg).sendToTarget();
+				}
+			}).start();
+		}
+		System.out.println("test1 mark done");
+		try {
+			Thread.currentThread().join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

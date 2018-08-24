@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.heaven7.java.base.util.Printer;
 
-/*public*/ class MessageQueue {
+public class MessageQueue {
 
 	private static final String TAG = "MessageQueue";
 
