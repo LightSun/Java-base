@@ -208,8 +208,10 @@ public class MessageQueue {
 			nextPollTimeoutMillis = 0;
 		}
 	}
-
-	/* public */ void removeMessages(Handler h, int what, Object object) {
+	void removeMessages(Handler h, int what, Object object){
+		removeMessages(h, what, object, false);
+	}
+	/* public */ void removeMessages(Handler h, int what, Object object, boolean allowEquals) {
 		if (h == null) {
 			return;
 		}
@@ -218,7 +220,9 @@ public class MessageQueue {
 			Message p = mMessages;
 
 			// Remove all messages at front.
-			while (p != null && p.target == h && p.what == what && (object == null || p.obj == object)) {
+			while (p != null && p.target == h && p.what == what &&
+					(object == null || p.obj == object
+					|| (allowEquals && p.obj.equals(object)))) {
 				Message n = p.next;
 				mMessages = n;
 				p.recycleUnchecked();
@@ -229,7 +233,9 @@ public class MessageQueue {
 			while (p != null) {
 				Message n = p.next;
 				if (n != null) {
-					if (n.target == h && n.what == what && (object == null || n.obj == object)) {
+					if (n.target == h && n.what == what &&
+							(object == null || n.obj == object
+							|| (allowEquals && p.obj.equals(object)))) {
 						Message nn = n.next;
 						n.recycleUnchecked();
 						p.next = nn;

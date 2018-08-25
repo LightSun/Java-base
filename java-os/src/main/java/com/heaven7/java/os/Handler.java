@@ -638,6 +638,14 @@ public class Handler {
 	public final void removeMessages(int what, Object object) {
 		mQueue.removeMessages(this, what, object);
 	}
+	/**
+	 * Remove any pending posts of messages with code 'what' and whose obj is
+	 * 'object' that are in the message queue. If <var>object</var> is null, all
+	 * messages will be removed.
+	 */
+	public final void removeMessagesEquals(int what, Object object) {
+		mQueue.removeMessages(this, what, object, true);
+	}
 
 	/**
 	 * Remove any pending posts of callbacks and sent messages whose
