@@ -18,14 +18,14 @@ public class Message {
      * {@link #setData(Cloneable) setData()} if you only need to store a
      * few integer values.
      */
-    public int arg1; 
+    public int arg1;
 
     /**
      * arg1 and arg2 are lower-cost alternatives to using
      * {@link #setData(Cloneable) setData()} if you only need to store a
      * few integer values.
      */
-    public int arg2;
+    public long arg2;
 
     /**
      * An arbitrary object to send to the recipient.  When using
@@ -203,7 +203,7 @@ public class Message {
      * @param arg2  The <em>arg2</em> value to set.
      * @return  A Message object from the global pool.
      */
-    public static Message obtain(Handler h, int what, int arg1, int arg2) {
+    public static Message obtain(Handler h, int what, int arg1, long arg2) {
         Message m = obtain();
         m.target = h;
         m.what = what;
@@ -225,7 +225,7 @@ public class Message {
      * @return  A Message object from the global pool.
      */
     public static Message obtain(Handler h, int what, 
-            int arg1, int arg2, Object obj) {
+            int arg1, long arg2, Object obj) {
         Message m = obtain();
         m.target = h;
         m.what = what;
@@ -434,7 +434,7 @@ public class Message {
 
     /*public*/ String toString(long now) {
         StringBuilder b = new StringBuilder();
-        b.append("{ when=" + DF.format(new Date(when - now)));
+        b.append("{ when=" + DF.format(new Date(when /*- now*/)));
 
         if (target != null) {
             if (callback != null) {
@@ -469,5 +469,44 @@ public class Message {
 
         b.append(" }");
         return b.toString();
+    }
+
+    /**
+     * the builder class of message.
+     * @author heaven7
+     */
+    public static class Builder{
+        final Message message = Message.obtain();
+        public Builder what(int what){
+            message.what = what;
+            return this;
+        }
+        public Builder arg1(int arg1){
+            message.arg1 = arg1;
+            return this;
+        }
+        public Builder arg2(long arg2){
+            message.arg2 = arg2;
+            return this;
+        }
+        public Builder obj(Object obj){
+            message.obj = obj;
+            return this;
+        }
+        public Builder data(Cloneable data){
+            message.data = data;
+            return this;
+        }
+        public Builder callback(Runnable callback){
+            message.callback = callback;
+            return this;
+        }
+        public Builder handler(Handler handler){
+            message.target = handler;
+            return this;
+        }
+        public Message build(){
+            return message;
+        }
     }
 }
