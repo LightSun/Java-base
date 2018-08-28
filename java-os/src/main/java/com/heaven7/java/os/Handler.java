@@ -1,6 +1,7 @@
 package com.heaven7.java.os;
 
 import java.lang.reflect.Modifier;
+import java.util.Comparator;
 
 import com.heaven7.java.base.util.DefaultPrinter;
 import com.heaven7.java.base.util.Printer;
@@ -645,6 +646,9 @@ public class Handler {
 	 */
 	public final void removeMessagesEquals(int what, Object object) {
 		mQueue.removeMessages(this, what, object, true);
+	}
+	public final void removeMessages(Message target, Comparator<? super Message> comparator) {
+		mQueue.removeMessages(this, target, comparator);
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package com.heaven7.java.os;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import com.heaven7.java.base.util.Printer;
 
@@ -236,6 +237,38 @@ public class MessageQueue {
 					if (n.target == h && n.what == what &&
 							(object == null || n.obj == object
 							|| (allowEquals && p.obj.equals(object)))) {
+						Message nn = n.next;
+						n.recycleUnchecked();
+						p.next = nn;
+						continue;
+					}
+				}
+				p = n;
+			}
+		}
+	}
+
+	/* public */ void removeMessages(Handler h, Message target, Comparator<? super Message> comparator) {
+		if (h == null) {
+			return;
+		}
+
+		synchronized (this) {
+			Message p = mMessages;
+
+			// Remove all messages at front.
+			while (p != null && p.target == h && comparator.compare(p, target) == 0) {
+				Message n = p.next;
+				mMessages = n;
+				p.recycleUnchecked();
+				p = n;
+			}
+
+			// Remove all messages after front.
+			while (p != null) {
+				Message n = p.next;
+				if (n != null) {
+					if (n.target == h && comparator.compare(p, target) == 0) {
 						Message nn = n.next;
 						n.recycleUnchecked();
 						p.next = nn;
