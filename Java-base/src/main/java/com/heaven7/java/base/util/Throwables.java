@@ -25,13 +25,13 @@ import java.util.List;
 
 import com.heaven7.java.base.anno.Nullable;
 
-
 /**
  * Static utility methods pertaining to instances of {@link Throwable}.
- * <p/>
+ * <p>
+ * <p>
+ * <p>
  * <p>See the Guava User Guide entry on <a href=
- * "http://code.google.com/p/guava-libraries/wiki/ThrowablesExplained">
- * Throwables</a>.
+ * "http://code.google.com/p/guava-libraries/wiki/ThrowablesExplained"> Throwables</a>.
  *
  * @author Kevin Bourrillion
  * @author Ben Yu
@@ -43,8 +43,27 @@ public final class Throwables {
     }
 
     /**
-     * Propagates {@code throwable} exactly as-is, if and only if it is an
-     * instance of {@code declaredType}.  Example usage:
+     * handle the target exception smartly
+     *
+     * @param t                 the throwable
+     * @param exceptionStrictly handle the exception smartly
+     * @since 1.1.2
+     */
+    public static void handleExceptionSmartly(Throwable t, boolean exceptionStrictly) {
+        if (t == null) {
+            return;
+        }
+        if (t instanceof Error || exceptionStrictly) {
+            throw new RuntimeException(t);
+        } else {
+            t.printStackTrace();
+        }
+    }
+
+    /**
+     * Propagates {@code throwable} exactly as-is, if and only if it is an instance of {@code
+     * declaredType}. Example usage:
+     * <p>
      * <pre>
      *   try {
      *     someMethodThatCouldThrowAnything();
@@ -66,8 +85,9 @@ public final class Throwables {
     }
 
     /**
-     * Propagates {@code throwable} exactly as-is, if and only if it is an
-     * instance of {@link RuntimeException} or {@link Error}.  Example usage:
+     * Propagates {@code throwable} exactly as-is, if and only if it is an instance of {@link
+     * RuntimeException} or {@link Error}. Example usage:
+     * <p>
      * <pre>
      *   try {
      *     someMethodThatCouldThrowAnything();
@@ -85,9 +105,9 @@ public final class Throwables {
     }
 
     /**
-     * Propagates {@code throwable} exactly as-is, if and only if it is an
-     * instance of {@link RuntimeException}, {@link Error}, or
-     * {@code declaredType}. Example usage:
+     * Propagates {@code throwable} exactly as-is, if and only if it is an instance of {@link
+     * RuntimeException}, {@link Error}, or {@code declaredType}. Example usage:
+     * <p>
      * <pre>
      *   try {
      *     someMethodThatCouldThrowAnything();
@@ -100,8 +120,7 @@ public final class Throwables {
      * </pre>
      *
      * @param throwable    the Throwable to possibly propagate
-     * @param declaredType the single checked exception type declared by the
-     *                     calling method
+     * @param declaredType the single checked exception type declared by the calling method
      */
     public static <X extends Throwable> void propagateIfPossible(
             @Nullable Throwable throwable, Class<X> declaredType) throws X {
@@ -110,35 +129,32 @@ public final class Throwables {
     }
 
     /**
-     * Propagates {@code throwable} exactly as-is, if and only if it is an
-     * instance of {@link RuntimeException}, {@link Error}, {@code declaredType1},
-     * or {@code declaredType2}.  In the unlikely case that you have three or more
-     * declared checked exception types, you can handle them all by invoking these
-     * methods repeatedly. See usage example in {@link
+     * Propagates {@code throwable} exactly as-is, if and only if it is an instance of {@link
+     * RuntimeException}, {@link Error}, {@code declaredType1}, or {@code declaredType2}. In the
+     * unlikely case that you have three or more declared checked exception types, you can handle them
+     * all by invoking these methods repeatedly. See usage example in {@link
      * #propagateIfPossible(Throwable, Class)}.
      *
      * @param throwable     the Throwable to possibly propagate
-     * @param declaredType1 any checked exception type declared by the calling
-     *                      method
-     * @param declaredType2 any other checked exception type declared by the
-     *                      calling method
+     * @param declaredType1 any checked exception type declared by the calling method
+     * @param declaredType2 any other checked exception type declared by the calling method
      */
-    public static <X1 extends Throwable, X2 extends Throwable>
-    void propagateIfPossible(@Nullable Throwable throwable,
-                             Class<X1> declaredType1, Class<X2> declaredType2) throws X1, X2 {
-        //Preconditions.checkNotNull(declaredType2);
+    public static <X1 extends Throwable, X2 extends Throwable> void propagateIfPossible(
+            @Nullable Throwable throwable, Class<X1> declaredType1, Class<X2> declaredType2)
+            throws X1, X2 {
+        // Preconditions.checkNotNull(declaredType2);
         propagateIfInstanceOf(throwable, declaredType1);
         propagateIfPossible(throwable, declaredType2);
     }
 
     /**
-     * Propagates {@code throwable} as-is if it is an instance of
-     * {@link RuntimeException} or {@link Error}, or else as a last resort, wraps
-     * it in a {@code RuntimeException} then propagates.
-     * <p/>
-     * This method always throws an exception. The {@code RuntimeException} return
-     * type is only for client code to make Java type system happy in case a
-     * return value is required by the enclosing method. Example usage:
+     * Propagates {@code throwable} as-is if it is an instance of {@link RuntimeException} or {@link
+     * Error}, or else as a last resort, wraps it in a {@code RuntimeException} then propagates.
+     * <p>
+     * <p>This method always throws an exception. The {@code RuntimeException} return type is only for
+     * client code to make Java type system happy in case a return value is required by the enclosing
+     * method. Example usage:
+     * <p>
      * <pre>
      *   T doSomething() {
      *     try {
@@ -152,19 +168,19 @@ public final class Throwables {
      * </pre>
      *
      * @param throwable the Throwable to propagate
-     * @return nothing will ever be returned; this return type is only for your
-     * convenience, as illustrated in the example above
+     * @return nothing will ever be returned; this return type is only for your convenience, as
+     * illustrated in the example above
      */
     public static RuntimeException propagate(Throwable throwable) {
-        //propagateIfPossible(Preconditions.checkNotNull(throwable));
+        // propagateIfPossible(Preconditions.checkNotNull(throwable));
         propagateIfPossible(throwable);
         throw new RuntimeException(throwable);
     }
 
     /**
-     * Returns the innermost cause of {@code throwable}. The first throwable in a
-     * chain provides context from when the error or exception was initially
-     * detected. Example usage:
+     * Returns the innermost cause of {@code throwable}. The first throwable in a chain provides
+     * context from when the error or exception was initially detected. Example usage:
+     * <p>
      * <pre>
      *   assertEquals("Unable to assign a customer id",
      *       Throwables.getRootCause(e).getMessage());
@@ -179,21 +195,23 @@ public final class Throwables {
     }
 
     /**
-     * Gets a {@code Throwable} cause chain as a list.  The first entry in the
-     * list will be {@code throwable} followed by its cause hierarchy.  Note
-     * that this is a snapshot of the cause chain and will not reflect
-     * any subsequent changes to the cause chain.
-     * <p/>
-     * <p>Here's an example of how it can be used to find specific types
-     * of exceptions in the cause chain:
-     * <p/>
+     * Gets a {@code Throwable} cause chain as a list. The first entry in the list will be {@code
+     * throwable} followed by its cause hierarchy. Note that this is a snapshot of the cause chain and
+     * will not reflect any subsequent changes to the cause chain.
+     * <p>
+     * <p>
+     * <p>
+     * <p>Here's an example of how it can be used to find specific types of exceptions in the cause
+     * chain:
+     * <p>
+     * <p>
+     * <p>
      * <pre>
      * Iterables.filter(Throwables.getCausalChain(e), IOException.class));
      * </pre>
      *
      * @param throwable the non-null {@code Throwable} to extract causes from
-     * @return an unmodifiable list containing the cause chain starting with
-     * {@code throwable}
+     * @return an unmodifiable list containing the cause chain starting with {@code throwable}
      */
     public static List<Throwable> getCausalChain(Throwable throwable) {
         // Preconditions.checkNotNull(throwable);
@@ -206,20 +224,20 @@ public final class Throwables {
     }
 
     /**
-     * Returns a string containing the result of
-     * {@link Throwable#toString() toString()}, followed by the full, recursive
-     * stack trace of {@code throwable}. Note that you probably should not be
-     * parsing the resulting string; if you need programmatic access to the stack
-     * frames, you can call {@link Throwable#getStackTrace()}.
+     * Returns a string containing the result of {@link Throwable#toString() toString()}, followed by
+     * the full, recursive stack trace of {@code throwable}. Note that you probably should not be
+     * parsing the resulting string; if you need programmatic access to the stack frames, you can call
+     * {@link Throwable#getStackTrace()}.
      */
     public static String getStackTraceAsString(Throwable throwable) {
         StringWriter stringWriter = new StringWriter();
         throwable.printStackTrace(new PrintWriter(stringWriter));
         return stringWriter.toString();
     }
-    
+
     /**
      * check the target object is null .
+     *
      * @param obj the target object
      */
     public static void checkNull(Object obj) {
@@ -245,6 +263,7 @@ public final class Throwables {
 
     /**
      * check the target Collection is empty .
+     *
      * @param coll the target Collection
      */
     public static <T> void checkEmpty(Collection<T> coll) {
@@ -255,8 +274,10 @@ public final class Throwables {
             throw new IllegalArgumentException();
         }
     }
+
     /**
      * check the target map is empty .
+     *
      * @param map the target map
      */
     public static <K, V> void checkEmpty(java.util.Map<K, V> map) {
@@ -270,6 +291,7 @@ public final class Throwables {
 
     /**
      * check the target int array is empty .
+     *
      * @param arr the target array
      */
     public static void checkEmpty(int[] arr) {
@@ -280,22 +302,26 @@ public final class Throwables {
             throw new IllegalArgumentException();
         }
     }
+
     /**
      * check the target value is non positive .
+     *
      * @param value the value
      */
     public static void checkNonPositiveValue(int value) {
-       if(value <= 0 ){
-    	   throw new IllegalArgumentException();
-       }
+        if (value <= 0) {
+            throw new IllegalArgumentException();
+        }
     }
+
     /**
      * check the target value is negative.
+     *
      * @param value the value
      */
     public static void checkNegativeValue(int value) {
-    	if(value < 0 ){
-    		throw new IllegalArgumentException();
-    	}
+        if (value < 0) {
+            throw new IllegalArgumentException();
+        }
     }
 }
