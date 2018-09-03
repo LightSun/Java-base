@@ -75,8 +75,12 @@ public class ScheduledThreadPoolExecutor2 extends ScheduledThreadPoolExecutor {
         }
         public ScheduledThreadPoolExecutor build(){
             ScheduledThreadPoolExecutor2 instance;
-            if(rejectedExecutionHandler == null){
-                instance = new ScheduledThreadPoolExecutor2(corePoolSize);
+            if(rejectedExecutionHandler == null) {
+                if (threadFactory != null) {
+                    instance = new ScheduledThreadPoolExecutor2(corePoolSize, threadFactory);
+                }else {
+                    instance = new ScheduledThreadPoolExecutor2(corePoolSize);
+                }
             }else{
                 if(threadFactory == null){
                     instance = new ScheduledThreadPoolExecutor2(corePoolSize, rejectedExecutionHandler);
