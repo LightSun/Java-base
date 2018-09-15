@@ -56,9 +56,4 @@ public class PropertyBundle extends Properties implements Cloneable, Serializabl
 			throw new IllegalStateException("wrong mapping for the key = " + key);
 		}
 	}
-	
-	@Override
-	public synchronized Object clone() {
-		return (PropertyBundle)super.clone();
-	}
 }

@@ -29,4 +29,14 @@ public final class Predicates {
 	public static <K,V> boolean isSortedMap(java.util.Map<K, V> map){
 		return map instanceof SortedMap;
 	}
+
+	/**
+	 * indicate the string is empty or not.
+	 * @param str the string
+	 * @return true if is empty.
+	 * @since 1.1.3
+	 */
+	public static boolean isEmpty(String str) {
+		return str == null || str.length() == 0;
+	}
 }

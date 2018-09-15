@@ -6,7 +6,7 @@ package com.heaven7.java.base.util;
  * @since 1.0.2
  * @see Printer
  */
-public class DefaultPrinter implements Printer{
+public class DefaultPrinter extends BasePrinter implements Printer{
 	
 	private static DefaultPrinter sPrinter;
 	
@@ -17,22 +17,21 @@ public class DefaultPrinter implements Printer{
 	public static DefaultPrinter getDefault(){
 		return sPrinter !=null ? sPrinter : (sPrinter = new DefaultPrinter());
 	}
-	
-	@Override
-	public void println(String x) {
-		System.out.println(x);
-	}
-
-	@Override
-	public void warn(String tag, String msg, Throwable t) {
-		System.err.println(tag + " >>> " + msg + " >>> " + Throwables.getStackTraceAsString(t));
-	}
-
 	@Override
 	public void warn(String tag, String method, String msg) {
 		System.err.println(tag + "__WARN__ >>> called " + method + "(): " + msg);
 	}
-	
+
+	@Override
+	public void verbose(String tag, String method, String msg) {
+		System.out.println(tag + "__VERBOSE__ >>> called " + method + "(): " + msg);
+	}
+
+	@Override
+	public void error(String tag, String method, String msg) {
+		System.out.println(tag + "__ERROR__ >>> called " + method + "(): " + msg);
+	}
+
 	@Override
 	public void info(String tag, String method, String msg) {
 		System.out.println(tag + "__INFO__ >>> called " + method + "(): " + msg);

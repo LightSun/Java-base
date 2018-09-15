@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 /**
+ * <p>for {@linkplain Executors} has a problem when occurred exception in sub-thread while use {@linkplain ExecutorService}. so i use this to replace it.</p>
  * <p>Relative to {@linkplain Executors} add exception handle. @By heaven7</p>
  * Factory and utility methods for {@link Executor}, {@link
  * ExecutorService}, {@link ScheduledExecutorService}, {@link
