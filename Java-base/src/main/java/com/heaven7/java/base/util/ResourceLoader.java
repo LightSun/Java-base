@@ -71,7 +71,7 @@ public abstract class ResourceLoader {
         InputStream in = null;
         try {
             in = loadFileAsStream(context, path);
-            return true;
+            return in != null;
         }catch (IOException e){
             return false;
         }finally {
