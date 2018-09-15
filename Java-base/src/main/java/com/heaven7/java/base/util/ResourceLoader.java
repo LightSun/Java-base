@@ -50,6 +50,7 @@ public abstract class ResourceLoader {
         }
         return sInstance;
     }
+
     /**
      * load file as stream . the file path may be absolute or relative.
      *
@@ -57,8 +58,26 @@ public abstract class ResourceLoader {
      * @param path    the path
      * @return the content string
      */
-    public abstract InputStream loadFileAsStream(Object context, String path);
+    public abstract InputStream loadFileAsStream(Object context, String path) throws IOException;
 
+    /**
+     * indicate the file is exist or not.
+     * @param context the context
+     * @param path the path . may be relative or absolute
+     * @return true if the file exist.
+     * @since 1.1.3.2
+     */
+    public final boolean isFileExists(Object context, String path){
+        InputStream in = null;
+        try {
+            in = loadFileAsStream(context, path);
+            return true;
+        }catch (IOException e){
+            return false;
+        }finally {
+            IOUtils.closeQuietly(in);
+        }
+    }
     /**
      * load file as string , this often used for config file.
      *
@@ -88,7 +107,12 @@ public abstract class ResourceLoader {
     }
 
     public Properties loadFileAsProperties(Object context, String path) {
-        InputStream in = loadFileAsStream(context, path);
+        InputStream in = null;
+        try {
+            in = loadFileAsStream(context, path);
+        } catch (IOException e) {
+           throw new RuntimeException(e);
+        }
         return loadProperties(in, "load file failed. path = " + path);
     }
 
@@ -114,15 +138,11 @@ public abstract class ResourceLoader {
     @Platform
     static class PcResourceLoader extends ResourceLoader {
         @Override
-        public InputStream loadFileAsStream(Object context, String path) {
+        public InputStream loadFileAsStream(Object context, String path) throws IOException{
             if (TextUtils.isRelativePath(path)) {
                 return ResourceLoader.class.getClassLoader().getResourceAsStream(path);
             } else {
-                try {
-                    return new FileInputStream(path);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                 return new FileInputStream(path);
             }
         }
     }
