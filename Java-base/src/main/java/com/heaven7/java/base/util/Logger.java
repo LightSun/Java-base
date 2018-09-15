@@ -166,5 +166,9 @@ public class Logger {
         }
     }
 
+    public static String toString(Throwable e){
+        return Throwables.getStackTraceAsString(e);
+    }
+
 }
 
