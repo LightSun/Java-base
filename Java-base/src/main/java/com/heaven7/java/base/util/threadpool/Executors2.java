@@ -52,7 +52,7 @@ public class Executors2 {
                 .setCorePoolSize(nThreads)
                 .setMaximumPoolSize(nThreads)
                 .setKeepAliveTime(0, TimeUnit.MILLISECONDS)
-                .setWorkQueue(new LinkedBlockingQueue<>())
+                .setWorkQueue(new LinkedBlockingQueue<Runnable>())
                 .setExceptionStrictly(false)
                 .build();
       /*  return new ThreadPoolExecutor(nThreads, nThreads,
@@ -84,7 +84,7 @@ public class Executors2 {
                 .setCorePoolSize(nThreads)
                 .setMaximumPoolSize(nThreads)
                 .setKeepAliveTime(0, TimeUnit.MILLISECONDS)
-                .setWorkQueue(new LinkedBlockingQueue<>())
+                .setWorkQueue(new LinkedBlockingQueue<Runnable>())
                 .setExceptionStrictly(false)
                 .setThreadFactory(threadFactory)
                 .build();
@@ -169,7 +169,7 @@ public class Executors2 {
                 .setCorePoolSize(0)
                 .setMaximumPoolSize(Integer.MAX_VALUE)
                 .setKeepAliveTime(60L, TimeUnit.SECONDS)
-                .setWorkQueue(new SynchronousQueue<>())
+                .setWorkQueue(new SynchronousQueue<Runnable>())
                 .setExceptionStrictly(false)
                 .setThreadFactory(threadFactory)
                 .build();
