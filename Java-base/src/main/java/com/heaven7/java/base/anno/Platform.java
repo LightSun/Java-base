@@ -1,5 +1,6 @@
 package com.heaven7.java.base.anno;
 
+import com.heaven7.java.base.util.CoreConstants;
 import com.heaven7.java.base.util.Platforms;
 
 import java.lang.annotation.ElementType;
@@ -21,4 +22,11 @@ public @interface Platform {
      * @return the support platforms
      */
     byte[] value() default { Platforms.WINDOWS, Platforms.MAC, Platforms.LINUX };
+
+    /**
+     * indicate the possibility of used platform
+     * @return the possibility. default is {@linkplain CoreConstants#ALWAYS}.
+     * @since 1.1.3.5
+     */
+    byte possibility() default CoreConstants.ALWAYS;
 }

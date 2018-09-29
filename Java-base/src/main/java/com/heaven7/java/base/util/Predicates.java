@@ -14,11 +14,21 @@ public final class Predicates {
 	public static boolean equals(Object a, Object b) {
 		return (a == b) || (a != null && a.equals(b));
 	}
-	public static boolean isTrue(Boolean value) {
-		return value != null && value;
+	public static boolean isTrue(Object value) {
+		return value != null && value instanceof Boolean && (Boolean)value;
 	}
 	public static <E> boolean isEmpty(Collection<E> list) {
 		return list == null || list.size() == 0;
+	}
+
+	/**
+	 *  indicate the map is empty or not.
+	 * @param map the map
+	 * @return is empty or not
+	 * @since 1.1.3.5
+	 */
+	public static boolean isEmpty(java.util.Map<?, ?> map) {
+		return map == null || map.size() == 0;
 	}
 	public static boolean isEmpty(int[] arr) {
 		return arr == null || arr.length == 0;
