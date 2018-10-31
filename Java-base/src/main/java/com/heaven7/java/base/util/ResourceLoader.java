@@ -5,12 +5,32 @@ import com.heaven7.java.base.anno.Platform;
 
 import java.io.*;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import static com.heaven7.java.base.util.ResourceLoader.ANDROID_NAME;
 
 /**
+ * the resource loader. if you use this on android. you need define a class named 'org.heaven7.android.base.impl.ResourceLoaderImpl'.
+ * and here is the sample code.
+ * <code><pre>
+ {@literal @}Keep
+public class ResourceLoaderImpl extends ResourceLoader{
+
+     {@literal @}Override
+    public InputStream loadFileAsStream(Object ctx, String path) throws IOException {
+        if (!TextUtils.isRelativePath(path)) {
+            return new FileInputStream(path);
+        }
+        if(ctx instanceof Context){
+                Context con = (Context) ctx;
+                return con.getAssets().open(path);
+        }
+        throw new UnsupportedOperationException("wrong context. ctx is " + ctx.getClass().getName());
+    }
+}
+ * </pre></code>
  * @author heaven7
  * @since 1.1.3
  */
@@ -97,6 +117,30 @@ public abstract class ResourceLoader {
         }
     }
 
+    /**
+     * load the file as string lines
+     * @param context the context
+     * @param path the file path . can be relative or absolute
+     * @return the string lines
+     * @since 1.1.3.6
+     */
+    public List<String> loadFileAsStringLines(Object context, String path) {
+        Reader reader = null;
+        try {
+            reader = new InputStreamReader(loadFileAsStream(context, path));
+            return IOUtils.readStringLines(reader);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            IOUtils.closeQuietly(reader);
+        }
+    }
+
+    /**
+     * load the url
+     * @param path the url path
+     * @return the input stream
+     */
     public InputStream loadUrl(String path) {
         try {
             URL url = new URL(path);
@@ -106,6 +150,12 @@ public abstract class ResourceLoader {
         }
     }
 
+    /**
+     * load file as properties
+     * @param context the context
+     * @param path the file path. may be relative or absolute
+     * @return the properties
+     */
     public Properties loadFileAsProperties(Object context, String path) {
         InputStream in = null;
         try {

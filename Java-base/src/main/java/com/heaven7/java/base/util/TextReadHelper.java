@@ -42,14 +42,15 @@ public final class TextReadHelper<Line>{
     }
     public static abstract class Callback<Line>{
         /**
-         * open the link to a reader. default is read as a absolute file reader.
+         * open the link to a reader. default is read as a file. support read assets on android.
          * @param context the context
          * @param link the link. may be absolute file name, relative path , or a url.
          * @return the buffer reader.
-         * @throws IOException
+         * @see ResourceLoader
+         * @throws IOException if an I/O error occurs
          */
         public BufferedReader open(Object context, String link) throws IOException{
-            return new BufferedReader(new InputStreamReader(new FileInputStream(link)));
+            return new BufferedReader(new InputStreamReader(ResourceLoader.getDefault().loadFileAsStream(context, link)));
         }
         /**
          * parse the line into a object.

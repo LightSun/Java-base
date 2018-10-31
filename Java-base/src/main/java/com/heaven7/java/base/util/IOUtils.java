@@ -1,6 +1,8 @@
 package com.heaven7.java.base.util;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @since 1.1.3
@@ -10,6 +12,11 @@ public class IOUtils {
     private static final int EOF = -1;
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
 
+    /**
+     * read file as string
+     * @param path the file path. absolute path
+     * @return the string content.
+     */
     public static String readFileAsString(String path){
         Reader reader = null;
         try {
@@ -22,6 +29,12 @@ public class IOUtils {
         }
     }
 
+    /**
+     * read the reader as string
+     * @param r the reader
+     * @return the content as string
+     * @throws IOException If an I/O error occurs
+     */
     public static String readString(Reader r) throws IOException {
         BufferedReader br = r instanceof BufferedReader ? (BufferedReader) r : new BufferedReader(r);
 
@@ -33,6 +46,30 @@ public class IOUtils {
         return sb.toString();
     }
 
+    /**
+     * read the reader as string lines
+     * @param r the reader
+     * @return the string lines
+     * @throws IOException If an I/O error occurs
+     * @since 1.1.3.6
+     */
+    public static List<String> readStringLines(Reader r) throws IOException {
+        BufferedReader br = r instanceof BufferedReader ? (BufferedReader) r : new BufferedReader(r);
+        List<String> lines = new ArrayList<>();
+
+        String str;
+        while ((str = br.readLine()) != null) {
+            lines.add(str);
+        }
+        return lines;
+    }
+
+    /**
+     * read string and close reader
+     * @param r the reader
+     * @return the string context
+     * @throws IOException If an I/O error occurs
+     */
     public static String readStringThenClose(Reader r) throws IOException {
         BufferedReader br = r instanceof BufferedReader ? (BufferedReader) r : new BufferedReader(r);
         try{
@@ -47,6 +84,10 @@ public class IOUtils {
         }
     }
 
+    /**
+     * close the data
+     * @param closeable the object which can be close
+     */
     public static void closeQuietly(Closeable closeable) {
         if (closeable != null) {
             try {
@@ -58,6 +99,14 @@ public class IOUtils {
             }
         }
     }
+
+    /**
+     * copy the input stream to out.
+     * @param input the input stream
+     * @param output the output stream
+     * @return the count of read.
+     * @throws IOException
+     */
     public static long copyLarge(InputStream input, OutputStream output)
             throws IOException {
 
