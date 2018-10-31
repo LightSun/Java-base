@@ -23,12 +23,15 @@ public class Platforms {
             SYSTEM_TYPE = WINDOWS;
         } else if (os.contains("OS X")) {
             SYSTEM_TYPE = MAC;
-        } else if (os.contains("android")){
-            SYSTEM_TYPE = ANDROID;
-        }else if (os.contains("linux")){
-            SYSTEM_TYPE = LINUX;
         }else{
-            SYSTEM_TYPE = UNKNOWN;
+            String vendor = prop.getProperty("java.vm.vendor");
+            if(!Predicates.isEmpty(vendor) && vendor.contains("Android")){
+                SYSTEM_TYPE = ANDROID;
+            }else if(os.contains("Linux")){
+                SYSTEM_TYPE = LINUX;
+            }else {
+                SYSTEM_TYPE = UNKNOWN;
+            }
         }
     }
     public static byte getSystemType(){
