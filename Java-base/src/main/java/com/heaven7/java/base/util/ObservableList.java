@@ -70,18 +70,18 @@ public class ObservableList<E> implements List<E> {
          * @param index the index
          * @param ele the element
          */
-        default void onUpdate(ObservableList<E> origin, int index, E ele){}
+         void onUpdate(ObservableList<E> origin, int index, E ele);
         /**
          * called on some elements changed. Note this need manually call by {@linkplain ObservableList#notifyBatchChanged(List)}.
          * @param origin the observe list
          * @param batch the batch elements
          */
-        default void onBatchChanged(ObservableList<E> origin, List<E> batch){}
+         void onBatchChanged(ObservableList<E> origin, List<E> batch);
         /**
          * called on all elements changed. Note this need manually call by {@linkplain ObservableList#notifyAllChanged()}.
          * @param origin the observe list
          */
-        default void onAllChanged(ObservableList<E> origin){}
+         void onAllChanged(ObservableList<E> origin);
     }
 
     private final List<E> mList;

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class ObservableListTest {
 
-    private final ObservableList<Integer> mList = new ObservableList<>(new ArrayList<>(), new LogCallback<>());
+    private final ObservableList<Integer> mList = new ObservableList<Integer>(new ArrayList<Integer>(), new LogCallback<Integer>());
 
     @Test
     public void test1(){
@@ -53,6 +53,19 @@ public class ObservableListTest {
         @Override
         public void onBatchAdd(ObservableList<E> origin, int startIndex, Collection<E> batch) {
             Logger.d(TAG, "onBatchAdd", "startIndex = " + startIndex + " , batch  = " + batch);
+        }
+
+        @Override
+        public void onUpdate(ObservableList<E> origin, int index, E ele) {
+
+        }
+        @Override
+        public void onBatchChanged(ObservableList<E> origin, List<E> batch) {
+
+        }
+        @Override
+        public void onAllChanged(ObservableList<E> origin) {
+
         }
     }
 }
