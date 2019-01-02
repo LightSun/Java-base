@@ -127,7 +127,7 @@ public class ThreadPoolExecutor2 extends ThreadPoolExecutor {
         }
 
         public ThreadPoolExecutor build(){
-            if(maximumPoolSize <= 0 || keepAliveTime < 0 || corePoolSize <= 0){
+            if(maximumPoolSize <= 0 || keepAliveTime < 0 || corePoolSize < 0){
                 throw new IllegalStateException("param error");
             }
             if(workQueue == null){
