@@ -266,4 +266,57 @@ public class ObservableList<E> implements List<E> {
     public void notifyAllChanged(){
         mCallback.onAllChanged(this);
     }
+
+    /**
+     * the callback adapter
+     * @param <T> the element type
+     * @since 1.1.7
+     */
+    public static class SimpleCallback<T> implements Callback<T>{
+
+        @Override
+        public void onRemove(ObservableList<T> origin, int index, T ele) {
+
+        }
+
+        @Override
+        public void onAdd(ObservableList<T> origin, int index, T ele) {
+
+        }
+
+        @Override
+        public void onSet(ObservableList<T> origin, int index, T old, T newE) {
+
+        }
+
+        @Override
+        public void onClear(ObservableList<T> origin, List<T> old) {
+
+        }
+
+        @Override
+        public void onBatchRemove(ObservableList<T> origin, Collection<T> batch) {
+
+        }
+
+        @Override
+        public void onBatchAdd(ObservableList<T> origin, int startIndex, Collection<T> batch) {
+
+        }
+
+        @Override
+        public void onUpdate(ObservableList<T> origin, int index, T ele) {
+
+        }
+
+        @Override
+        public void onBatchChanged(ObservableList<T> origin, List<T> batch) {
+
+        }
+
+        @Override
+        public void onAllChanged(ObservableList<T> origin) {
+
+        }
+    }
 }

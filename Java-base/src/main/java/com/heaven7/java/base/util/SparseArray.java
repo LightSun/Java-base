@@ -42,9 +42,11 @@ import static com.heaven7.java.base.util.SearchUtils.binarySearch;
  * SparseArrays map integers to Objects. Unlike a normal array of Objects, there
  * can be gaps in the indices. It is intended to be more efficient than using a
  * HashMap to map Integers to Objects.
+ * <p>Use {@linkplain SparseArrayDelegate} by {@linkplain SparseFactory#newSparseArray(int)} instead. this will removed in 2.x</p>
  */
+@Deprecated
 @ThreadNotSafe
-public class SparseArray<E> {
+public class SparseArray<E> implements SparseArrayDelegate<E> {
 	private static final Object DELETED = new Object();
 	private boolean mGarbage = false;
 
@@ -66,18 +68,12 @@ public class SparseArray<E> {
 		mSize = 0;
 	}
 
-	/**
-	 * Gets the Object mapped from the specified key, or <code>null</code> if no
-	 * such mapping has been made.
-	 */
+	@Override
 	public E get(int key) {
 		return get(key, null);
 	}
 
-	/**
-	 * Gets the Object mapped from the specified key, or the specified Object if
-	 * no such mapping has been made.
-	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public E get(int key, E valueIfKeyNotFound) {
 		int i = binarySearch(mKeys, 0, mSize, key);
@@ -89,9 +85,7 @@ public class SparseArray<E> {
 		}
 	}
 
-	/**
-	 * Removes the mapping from the specified key, if there was any.
-	 */
+	@Override
 	public void delete(int key) {
 		int i = binarySearch(mKeys, 0, mSize, key);
 
@@ -103,21 +97,12 @@ public class SparseArray<E> {
 		}
 	}
 
-	/**
-	 * Alias for {@link #delete(int)}.
-	 */
+	@Override
 	public void remove(int key) {
 		delete(key);
 	}
 
-	/**
-	 * get the value and remove mapping.
-	 * 
-	 * @param key
-	 *            the key
-	 * @return the previous value
-	 * @since 1.0.7
-	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public E getAndRemove(int key) {
 		int i = binarySearch(mKeys, 0, mSize, key);
@@ -133,9 +118,7 @@ public class SparseArray<E> {
 		return (E) val;
 	}
 
-	/**
-	 * Removes the mapping at the specified index.
-	 */
+	@Override
 	public void removeAt(int index) {
 		if (mValues[index] != DELETED) {
 			mValues[index] = DELETED;
@@ -143,14 +126,7 @@ public class SparseArray<E> {
 		}
 	}
 
-	/**
-	 * Remove a range of mappings as a batch.
-	 *
-	 * @param index
-	 *            Index to begin at
-	 * @param size
-	 *            Number of mappings to remove
-	 */
+	@Override
 	public void removeAtRange(int index, int size) {
 		final int end = Math.min(mSize, index + size);
 		for (int i = index; i < end; i++) {
@@ -185,12 +161,7 @@ public class SparseArray<E> {
 		// Log.e("SparseArray", "gc end with " + mSize);
 	}
 
-	/**
-	 * Adds a mapping from the specified key to the specified value, replacing
-	 * the previous mapping from the specified key if there was one.
-	 * @return the old value.
-	 * changed 1.1.1 return from void to E.
-	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public E put(int key, E value) {
 		int i = binarySearch(mKeys, 0, mSize, key);
@@ -245,10 +216,7 @@ public class SparseArray<E> {
 		return null;
 	}
 
-	/**
-	 * Returns the number of key-value mappings that this SparseArray currently
-	 * stores.
-	 */
+	@Override
 	public int size() {
 		if (mGarbage) {
 			gc();
@@ -257,11 +225,7 @@ public class SparseArray<E> {
 		return mSize;
 	}
 
-	/**
-	 * Given an index in the range <code>0...size()-1</code>, returns the key
-	 * from the <code>index</code>th key-value mapping that this SparseArray
-	 * stores.
-	 */
+	@Override
 	public int keyAt(int index) {
 		if (mGarbage) {
 			gc();
@@ -270,11 +234,7 @@ public class SparseArray<E> {
 		return mKeys[index];
 	}
 
-	/**
-	 * Given an index in the range <code>0...size()-1</code>, returns the value
-	 * from the <code>index</code>th key-value mapping that this SparseArray
-	 * stores.
-	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public E valueAt(int index) {
 		if (mGarbage) {
@@ -284,11 +244,7 @@ public class SparseArray<E> {
 		return (E) mValues[index];
 	}
 
-	/**
-	 * Given an index in the range <code>0...size()-1</code>, sets a new value
-	 * for the <code>index</code>th key-value mapping that this SparseArray
-	 * stores.
-	 */
+	@Override
 	public void setValueAt(int index, E value) {
 		if (mGarbage) {
 			gc();
@@ -297,10 +253,7 @@ public class SparseArray<E> {
 		mValues[index] = value;
 	}
 
-	/**
-	 * Returns the index for which {@link #keyAt} would return the specified
-	 * key, or a negative number if the specified key is not mapped.
-	 */
+	@Override
 	public int indexOfKey(int key) {
 		if (mGarbage) {
 			gc();
@@ -309,33 +262,12 @@ public class SparseArray<E> {
 		return binarySearch(mKeys, 0, mSize, key);
 	}
 
-	/**
-	 * Returns an index for which {@link #valueAt} would return the specified
-	 * key, or a negative number if no keys map to the specified value.
-	 * <p>
-	 * Beware that this is a linear search, unlike lookups by key, and that
-	 * multiple keys can map to the same value and this will find only one of
-	 * them.
-	 * <p>
-	 * Note also that unlike most collections' {@code indexOf} methods, this
-	 * method compares values using {@code ==} rather than {@code equals}.
-	 */
+	@Override
 	public int indexOfValue(E value) {
 		return indexOfValue(value, true);
 	}
 
-	/**
-	 * Returns an index for which {@link #valueAt} would return the specified
-	 * key, or a negative number if no keys map to the specified value.
-	 * 
-	 * @param value
-	 *            the value
-	 * @param identity
-	 *            true .if only use '==' to judge. false include use 'equals()'
-	 *            to judge.
-	 * @return the index of value
-	 * @since 1.0.6
-	 */
+	@Override
 	public int indexOfValue(E value, boolean identity) {
 		if (mGarbage) {
 			gc();
@@ -353,9 +285,7 @@ public class SparseArray<E> {
 		return -1;
 	}
 
-	/**
-	 * Removes all key-value mappings from this SparseArray.
-	 */
+	@Override
 	public void clear() {
 		int n = mSize;
 		Object[] values = mValues;
@@ -402,14 +332,7 @@ public class SparseArray<E> {
 		mSize = pos + 1;
 	}
 
-	/**
-	 * Increases the size of the underlying storage if needed, to ensure that it
-	 * can hold the specified number of items without having to allocate
-	 * additional memory
-	 * 
-	 * @param capacity
-	 *            the number of items
-	 */
+	@Override
 	public void ensureCapacity(int capacity) {
 		if (mGarbage && mSize >= mKeys.length) {
 			gc();
@@ -439,10 +362,7 @@ public class SparseArray<E> {
 	 * return high; else return ~high; }
 	 */
 
-	/**
-	 * @return a read-only list of the values in this SparseArray which are in
-	 *         ascending order, based on their associated key
-	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<E> getValues() {
 		return Collections.unmodifiableList(Arrays.asList((E[]) mValues));
