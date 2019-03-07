@@ -12,6 +12,7 @@ import java.util.ListIterator;
  * @param <E> the element type
  * Created by heaven7 on 2018/11/2 0002.
  * @since 1.1.4
+ * @update 1.1.7
  */
 public class ObservableList<E> implements List<E> {
 
@@ -152,18 +153,17 @@ public class ObservableList<E> implements List<E> {
 
     @Override
     public @NonNull Iterator<E> iterator() {
-        return mList.iterator();
+        return new ListIteratorImpl(mList.listIterator());
     }
     @NonNull
     @Override
     public ListIterator<E> listIterator() {
-        return mList.listIterator();
+        return new ListIteratorImpl(mList.listIterator());
     }
-
     @NonNull
     @Override
     public ListIterator<E> listIterator(int index) {
-        return mList.listIterator(index);
+        return new ListIteratorImpl(mList.listIterator(index));
     }
 
     //-------------------------------------------------------------------
@@ -265,6 +265,59 @@ public class ObservableList<E> implements List<E> {
     }
     public void notifyAllChanged(){
         mCallback.onAllChanged(this);
+    }
+    private class ListIteratorImpl implements ListIterator<E>{
+
+        private final ListIterator<E> base;
+        public ListIteratorImpl(ListIterator<E> base) {
+            this.base = base;
+        }
+        @Override
+        public boolean hasNext() {
+            return base.hasNext();
+        }
+        @Override
+        public E next() {
+            return base.next();
+        }
+        @Override
+        public boolean hasPrevious() {
+            return base.hasPrevious();
+        }
+
+        @Override
+        public E previous() {
+            return base.previous();
+        }
+
+        @Override
+        public int nextIndex() {
+            return base.nextIndex();
+        }
+
+        @Override
+        public int previousIndex() {
+            return base.previousIndex();
+        }
+        @Override
+        public void remove() {
+            int index = base.nextIndex();
+            E e = get(index);
+            base.remove();
+            mCallback.onRemove(ObservableList.this, index, e);
+        }
+        @Override
+        public void set(E e) {
+            int index = base.nextIndex();
+            base.set(e);
+            mCallback.onUpdate(ObservableList.this, index, e);
+        }
+        @Override
+        public void add(E e) {
+            int index = base.nextIndex();
+            base.add(e);
+            mCallback.onAdd(ObservableList.this, index, e);
+        }
     }
 
     /**
