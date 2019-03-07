@@ -118,6 +118,19 @@ public abstract class ResourceLoader {
     }
 
     /**
+     * read the path as lines.
+     * @param context the context. if on pc. this often be null. or on android, this is the android context.
+     * @param path the path or url to read
+     * @param callback the read callback
+     * @param <Line> the line type
+     * @return the lines.
+     * @since 1.1.6
+     */
+    public <Line> List<Line> readLines(Object context, String path, TextReadHelper.Callback<Line> callback){
+        return new TextReadHelper<Line>(callback).read(context, path);
+    }
+
+    /**
      * load the file as string lines
      * @param context the context
      * @param path the file path . can be relative or absolute
