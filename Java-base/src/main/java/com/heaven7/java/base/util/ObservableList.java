@@ -309,8 +309,9 @@ public class ObservableList<E> implements List<E> {
         @Override
         public void set(E e) {
             int index = base.nextIndex();
+            E old = get(index);
             base.set(e);
-            mCallback.onUpdate(ObservableList.this, index, e);
+            mCallback.onSet(ObservableList.this, index, old, e);
         }
         @Override
         public void add(E e) {

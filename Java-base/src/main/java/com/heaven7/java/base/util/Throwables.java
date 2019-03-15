@@ -16,6 +16,7 @@
 
 package com.heaven7.java.base.util;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -248,6 +249,18 @@ public final class Throwables {
     public static void checkNull(Object obj) {
         if (obj == null) {
             throw new NullPointerException();
+        }
+    }
+
+    /**
+     * check the dir exists.
+     * @param path the target dir to check
+     * @since 1.1.7
+     */
+    public static void checkFileExist(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            throw new IllegalStateException("must be dir");
         }
     }
 
