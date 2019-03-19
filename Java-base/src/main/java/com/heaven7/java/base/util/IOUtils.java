@@ -13,6 +13,25 @@ public class IOUtils {
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
 
     /**
+     * read stream as bytes.
+     * @param in the input
+     * @return the data as bytes
+     * @throws IOException
+     * @since 1.1.7
+     */
+    public static byte[] read(InputStream in) throws IOException{
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+       do {
+            int count = in.read(buffer);
+            if(count == -1){
+                break;
+            }
+            baos.write(buffer, 0, count);
+        }while (true);
+       return baos.toByteArray();
+    }
+    /**
      * read file as string
      * @param path the file path. absolute path
      * @return the string content.
