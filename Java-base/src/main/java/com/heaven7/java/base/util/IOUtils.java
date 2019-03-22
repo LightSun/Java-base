@@ -19,7 +19,7 @@ public class IOUtils {
      * @throws IOException
      * @since 1.1.7
      */
-    public static byte[] read(InputStream in) throws IOException{
+    public static byte[] readBytes(InputStream in) throws IOException{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
        do {

@@ -72,6 +72,23 @@ public abstract class ResourceLoader {
     }
 
     /**
+     * load the path as bytes.
+     * @param context the context. for pc this often be null
+     * @param path the path of file or url to load
+     * @return the bytes.
+     * @throws IOException
+     * @since 1.1.7
+     */
+    public byte[] loadBytes(Object context, String path)throws IOException{
+        InputStream in = loadFileAsStream(context, path);
+        try {
+            return IOUtils.readBytes(in);
+        }finally {
+            IOUtils.closeQuietly(in);
+        }
+    }
+
+    /**
      * load file as stream . the file path may be absolute or relative.
      *
      * @param context the context.
