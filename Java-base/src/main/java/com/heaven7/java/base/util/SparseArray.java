@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.heaven7.java.base.anno.Deprecated;
 import com.heaven7.java.base.anno.ThreadNotSafe;
 import static com.heaven7.java.base.util.SearchUtils.binarySearch;
 
@@ -44,7 +45,7 @@ import static com.heaven7.java.base.util.SearchUtils.binarySearch;
  * HashMap to map Integers to Objects.
  * <p>Use {@linkplain SparseArrayDelegate} by {@linkplain SparseFactory#newSparseArray(int)} instead. this will removed in 2.x</p>
  */
-@Deprecated
+@Deprecated("use SparseFactory instead.")
 @ThreadNotSafe
 public class SparseArray<E> implements SparseArrayDelegate<E> {
 	private static final Object DELETED = new Object();

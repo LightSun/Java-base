@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
  * the scheduler class help we handle asynchronous or synchronous task.
  * 
  * @author heaven7
+ * @since 1.1.7
  */
 public interface Scheduler {
 
