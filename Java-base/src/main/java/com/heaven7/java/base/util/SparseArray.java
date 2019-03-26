@@ -53,7 +53,9 @@ public class SparseArray<E> implements SparseArrayDelegate<E> {
 
 	/**
 	 * Creates a new SparseArray containing no mappings.
+	 * <p>Use {@linkplain SparseArrayDelegate} by {@linkplain SparseFactory#newSparseArray(int)} instead. this will removed in 2.x</p>
 	 */
+	@java.lang.Deprecated
 	public SparseArray() {
 		this(10);
 	}
@@ -62,7 +64,9 @@ public class SparseArray<E> implements SparseArrayDelegate<E> {
 	 * Creates a new SparseArray containing no mappings that will not require
 	 * any additional memory allocation to store the specified number of
 	 * mappings.
+	 * <p>Use {@linkplain SparseArrayDelegate} by {@linkplain SparseFactory#newSparseArray(int)} instead. this will removed in 2.x</p>
 	 */
+	@java.lang.Deprecated
 	public SparseArray(int initialCapacity) {
 		mKeys = new int[initialCapacity];
 		mValues = new Object[initialCapacity];

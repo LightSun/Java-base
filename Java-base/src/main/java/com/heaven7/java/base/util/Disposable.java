@@ -8,6 +8,17 @@ import java.util.concurrent.Future;
  * @since 1.1.7
  */
 public interface Disposable {
+
+    /**
+     * the empty
+     * @since 1.1.8
+     */
+    Disposable EMPTY = new Disposable() {
+        @Override
+        public void dispose() {
+
+        }
+    };
     /**
      * dispose something. often used to release the resource at last. eg: when destroy.
      */
