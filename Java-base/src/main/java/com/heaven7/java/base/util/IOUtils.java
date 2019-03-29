@@ -20,7 +20,18 @@ public class IOUtils {
      * @since 1.1.7
      */
     public static byte[] readBytes(InputStream in) throws IOException{
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        return readBytes(in, in.available());
+    }
+    /**
+     * read stream as bytes.
+     * @param in the input
+     * @param estimatedSize Used to preallocate a possibly correct sized byte array to avoid an array copy.
+     * @return the data as bytes
+     * @throws IOException
+     * @since 1.1.8
+     */
+    public static byte[] readBytes(InputStream in, int estimatedSize) throws IOException{
+        ByteArrayOutputStream baos = new OptimizedByteArrayOutputStream(Math.max(0, estimatedSize));
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
        do {
             int count = in.read(buffer);
@@ -137,5 +148,22 @@ public class IOUtils {
             count += n;
         }
         return count;
+    }
+    /** A ByteArrayOutputStream which avoids copying of the byte array if not necessary.
+     * @author heaven7
+     * @since 1.1.8 */
+    static public class OptimizedByteArrayOutputStream extends ByteArrayOutputStream {
+        public OptimizedByteArrayOutputStream (int initialSize) {
+            super(initialSize);
+        }
+        @Override
+        public synchronized byte[] toByteArray () {
+            if (count == buf.length) return buf;
+            return super.toByteArray();
+        }
+
+        public byte[] getBuffer () {
+            return buf;
+        }
     }
 }

@@ -20,6 +20,16 @@ public interface Disposable {
         }
     };
     /**
+     * the failed: means schedule task failed.
+     * @since 1.1.8
+     */
+    Disposable FAILED = new Disposable() {
+        @Override
+        public void dispose() {
+
+        }
+    };
+    /**
      * dispose something. often used to release the resource at last. eg: when destroy.
      */
     void  dispose();
