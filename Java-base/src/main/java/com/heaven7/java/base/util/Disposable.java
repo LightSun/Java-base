@@ -35,13 +35,16 @@ public interface Disposable {
     void  dispose();
 
     class FutureDisposable implements Disposable{
-        private final Future<?> future;
+        private Future<?> future;
         public FutureDisposable(Future<?> future) {
             this.future = future;
         }
         @Override
         public void dispose() {
-            future.cancel(true);
+            if(future != null){
+                future.cancel(true);
+                future = null;
+            }
         }
     }
 
