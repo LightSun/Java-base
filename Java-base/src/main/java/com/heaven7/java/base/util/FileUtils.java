@@ -43,20 +43,22 @@ public class FileUtils {
      */
     public static String getMD5Three(String path) {
         BigInteger bi = null;
+        FileInputStream fis = null;
         try {
             byte[] buffer = new byte[8192];
             int len;
             MessageDigest md = MessageDigest.getInstance("MD5");
             File f = new File(path);
-            FileInputStream fis = new FileInputStream(f);
+            fis = new FileInputStream(f);
             while ((len = fis.read(buffer)) != -1) {
                 md.update(buffer, 0, len);
             }
-            fis.close();
             byte[] b = md.digest();
             bi = new BigInteger(1, b);
         } catch (NoSuchAlgorithmException | IOException e) {
             throw new RuntimeException(e);
+        }finally {
+            IOUtils.closeQuietly(fis);
         }
         return bi.toString(16);
     }
