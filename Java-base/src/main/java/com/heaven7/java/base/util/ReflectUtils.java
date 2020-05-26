@@ -6,22 +6,20 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class ReflectUtils {
+public final class ReflectUtils {
 
     public static Object callVirtualMethod(Object receiver, String methodName, Object... args){
         Method[] methods = receiver.getClass().getMethods();
-        if(Predicates.isEmpty(methods)){
-            throw new ReflectException("can't evaluate expression caused by can't find method (" +
-                    methodName + ") for object("+ receiver + ")");
-        }
         for(Method m : methods){
-            try {
-                return m.invoke(receiver, args);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                //ignore
+            if(m.getName().equals(methodName)){
+                try {
+                    return m.invoke(receiver, args);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    //ignore
+                }
             }
         }
-        throw new ReflectException("can't evaluate expression caused by invoke virtual method (" +
+        throw new ReflectException("can't invoke virtual method (" +
                 methodName + ") error for object("+ receiver + ")");
     }
     public static Object callStaticMethod(Class<?> clazz, String methodName, Object... args){
@@ -31,13 +29,15 @@ public class ReflectUtils {
                     methodName + ") for class("+ clazz.getName() + ")");
         }
         for(Method m : methods){
-            try {
-                return m.invoke(null, args);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                //ignore
+            if(m.getName().equals(methodName)){
+                try {
+                    return m.invoke(null, args);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    //ignore
+                }
             }
         }
-        throw new ReflectException("can't evaluate expression caused by invoke static method (" +
+        throw new ReflectException("can't invoke static method (" +
                 methodName + ") error for class("+ clazz.getName() + ")");
     }
 
