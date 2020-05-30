@@ -6,7 +6,7 @@ import java.util.Properties;
  * @author heaven7
  * @since 1.1.3
  */
-public class Platforms {
+public final class Platforms {
 
     public static final byte WINDOWS = 1;
     public static final byte MAC     = 2;

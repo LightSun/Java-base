@@ -2,11 +2,57 @@ package com.heaven7.java.base.util;
 
 import com.heaven7.java.base.anno.Nullable;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 
 public final class ReflectUtils {
+
+    /**
+     * create a array type for target component class
+     * @param clazz the component class
+     * @return the array type
+     * @since 1.2.1
+     */
+    public static Class<?> arrayType(Class<?> clazz) {
+        return Array.newInstance(clazz, 0).getClass();
+    }
+
+    /**
+     * get the constructor for target class and types
+     * @param clazz the class
+     * @param paramTypes the parameter type
+     * @param <T> the object type
+     * @return the constructor
+     * @since 1.2.1
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Constructor<T> constructor(Class<?> clazz, Class<?>...paramTypes){
+        try {
+            Constructor<?> c = clazz.getConstructor(paramTypes);
+            c.setAccessible(true);
+            return (Constructor<T>) c;
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * get the method for target class and name
+     * @param clazz the class
+     * @param name the method name
+     * @param paramTypes the parameter
+     * @return the method
+     *  @since 1.2.1
+     */
+    public static Method method(Class<?> clazz,String name,Class<?>...paramTypes){
+        try {
+            Method m = clazz.getMethod(name, paramTypes);
+            m.setAccessible(true);
+            return m;
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public static Object callVirtualMethod(Object receiver, String methodName, Object... args){
         Method[] methods = receiver.getClass().getMethods();
@@ -42,7 +88,7 @@ public final class ReflectUtils {
     }
 
     public static Object getVirtualFieldValue(@Nullable Object receiver, String fieldName) {
-        Field f = getField(receiver.getClass(), fieldName);
+        Field f = field(receiver.getClass(), fieldName);
         if(f == null){
             throw new ReflectException("can't evaluate expression caused by can't find field (" +
                     fieldName + ") for object("+ receiver + ")");
@@ -55,7 +101,7 @@ public final class ReflectUtils {
         }
     }
     public static Object getStaticFieldValue(Class<?> clazz, String fieldName) {
-        Field f = getField(clazz, fieldName);
+        Field f = field(clazz, fieldName);
         if(f == null){
             throw new ReflectException("can't evaluate expression caused by can't find field (" +
                     fieldName + ") for class("+ clazz.getName() + ")");
@@ -68,7 +114,7 @@ public final class ReflectUtils {
         }
     }
     public static void setVirtualFieldValue(String fieldName, Object val,@Nullable Object receiver) {
-        Field f = getField(receiver.getClass(), fieldName);
+        Field f = field(receiver.getClass(), fieldName);
         if(f == null){
             throw new ReflectException("can't evaluate expression caused by can't find field (" +
                     fieldName + ") for object("+ receiver + ")");
@@ -81,7 +127,7 @@ public final class ReflectUtils {
         }
     }
     public static void setStaticFieldValue(Class<?> clazz, String fieldName, Object val) {
-        Field f = getField(clazz, fieldName);
+        Field f = field(clazz, fieldName);
         if(f == null){
             throw new ReflectException("can't evaluate expression caused by can't find field (" +
                     fieldName + ") for class("+ clazz.getName() + ")");
@@ -94,7 +140,14 @@ public final class ReflectUtils {
         }
     }
 
-    private static Field getField(Class<?> clazz, String fieldName) {
+    /**
+     * get the field for target class and name
+     * @param clazz the class
+     * @param fieldName the field name
+     * @return the field
+     *  @since 1.2.1
+     */
+    public static Field field(Class<?> clazz, String fieldName) {
         Class<?> target = clazz;
         do{
             try {
