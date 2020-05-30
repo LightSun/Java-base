@@ -5,7 +5,7 @@ import com.heaven7.java.base.anno.Nullable;
 /**
  * @since 1.1.3
  */
-public class TextUtils {
+public final class TextUtils {
 
     private static final char[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 

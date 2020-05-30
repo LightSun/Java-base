@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author heaven7
  * @since 1.0.7
  */
-public class SafeUtil {
+public final class SafeUtil {
 
 	
 	/**

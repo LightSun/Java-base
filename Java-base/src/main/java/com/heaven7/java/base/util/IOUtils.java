@@ -8,7 +8,7 @@ import java.util.List;
  * @since 1.1.3
  * @author heaven7
  */
-public class IOUtils {
+public final class IOUtils {
     private static final int EOF = -1;
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
 

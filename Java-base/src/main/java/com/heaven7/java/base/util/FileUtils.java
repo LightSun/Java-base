@@ -14,7 +14,7 @@ import java.util.List;
  * @author heaven7
  * @since 1.1.7
  */
-public class FileUtils {
+public final class FileUtils {
 
     /**
      * the filename transformer
