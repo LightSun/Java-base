@@ -2,7 +2,7 @@
 apply plugin: 'java'
 
 group = 'com.github.LightSun.Java-base'
-version = library_version
+//version = library_version
 
 
 // In this section you declare the dependencies for your production and test code
