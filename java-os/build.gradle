@@ -8,15 +8,36 @@
  */
 
 // Apply the java plugin to add support for Java
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        // maven { url "https://repo.spring.io/libs-release" }
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        //  classpath "us.kirchmeier:gradle-capsule-plugin:1.0.2"
+    }
+}
+plugins {
+    id 'java'
+    id 'idea'
+}
+apply plugin: 'idea'
 apply plugin: 'java'
 
 repositories {
-    jcenter()
+    maven { url 'https://jitpack.io' }
+    mavenCentral()
+    maven { url "https://maven.aliyun.com/repository/public" }
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
     
     //compile 'com.heaven7.java.mvcs:Mvcs-java:1.1.4'
-    compile 'com.heaven7.java.base:Java-base:1.0.3'
+    implementation 'com.heaven7.java.base:Java-base:1.2.1'
 }
