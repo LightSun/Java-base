@@ -4,13 +4,14 @@ apply plugin: 'maven'
 
 buildscript {
     ext{
-        library_version = "1.2.2"
+        library_version = "1.2.3-2"
     }
     repositories {
         mavenCentral()
         maven { url 'https://jitpack.io' }
     }
     dependencies {
+        url "https://plugins.gradle.org/m2/"
     }
 }
 
