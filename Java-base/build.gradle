@@ -43,6 +43,10 @@ subprojects {
         classifier "sources"
         from sourceSets.main.allJava
     }
+    task javadocJar(type: Jar) {
+        from javadoc
+        classifier 'javadoc'
+    }
     publishing {
         publications {
             binary(MavenPublication) {
@@ -60,6 +64,7 @@ subprojects {
                 from components.java
 
                 artifact sourceJar
+                artifact javadocJar
             }
         }
     }
