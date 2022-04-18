@@ -1,9 +1,12 @@
 
 apply plugin: 'java'
+apply plugin: 'maven'
 
 buildscript {
+    ext{
+        library_version = "1.2.2"
+    }
     repositories {
-        jcenter()
         mavenCentral()
         maven { url 'https://jitpack.io' }
     }
@@ -18,28 +21,16 @@ allprojects {
         options.addStringOption('Xdoclint:none', '-quiet')
         options.addStringOption('encoding', 'UTF-8')
     }
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
 }
-
-repositories {
-    jcenter()
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
-}
-
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
 
-    testCompile 'junit:junit:4.12'
+    testCompile 'junit:junit:4.13.2'
 }
-/*
-publish {
-    userOrg = 'lightsun' //bintray user name
-    groupId = 'com.heaven7.java.base'
-    artifactId = 'Java-base'
-    publishVersion = '1.2.1'
-    desc = 'this is a base java lib . '
-    website = 'https://github.com/LightSun/Java-base'
-}*/
-//cmd: gradle bintrayUpload -PbintrayUser=lightsun -PbintrayKey=xxx -PdryRun=false
-// need jdk1.8  gradle 3.0+
+
+
