@@ -13,7 +13,7 @@ buildscript {
     }
 }
 allprojects {
-    version = "1.2.4"
+    version = "1.2.4-2"
     group = 'com.github.LightSun.Java-base'
 
     tasks.withType(Javadoc) {
@@ -25,29 +25,53 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'maven'
     apply plugin: 'maven-publish'
     apply plugin: "java-library"
 
     sourceCompatibility = 1.8 // java 8
     targetCompatibility = 1.8
-
-    java {
-        withSourcesJar()
-        withJavadocJar()
+//6.9.2 ok
+//    java {
+//        withSourcesJar()
+//        withJavadocJar()
+//    }
+    task sourceJar(type: Jar) {
+        classifier "sources"
+        from sourceSets.main.allJava
     }
-
     publishing {
         publications {
-            maven(MavenPublication) {
+            binary(MavenPublication) {
+                from components.java
+            }
+            binaryAndSources(MavenPublication) {
+                from components.java
+                artifact sourceJar
+            }
+            //mavenJava or maven(high version)
+            mavenJava(MavenPublication) {
                 groupId project.group
                 artifactId project.name
                 version project.version
                 from components.java
+
+                artifact sourceJar
             }
         }
     }
+
+    tasks.withType(PublishToMavenRepository) {
+        onlyIf {
+            return publication == publishing.publications.binaryAndSources
+        }
+    }
+    tasks.withType(PublishToMavenLocal) {
+        onlyIf {
+            publication == publishing.publications.binaryAndSources
+        }
+    }
 }
-
-
