@@ -1,11 +1,9 @@
 
-apply plugin: 'java'
-apply plugin: 'maven'
-
 buildscript {
-    ext{
-        library_version = "1.2.3-3"
-    }
+//    ext{
+//        version = "1.2.4"
+//        group = 'com.github.LightSun.Java-base'
+//    }
     repositories {
         mavenCentral()
         maven { url 'https://jitpack.io' }
@@ -14,10 +12,10 @@ buildscript {
        // url "https://plugins.gradle.org/m2/"
     }
 }
-
 allprojects {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    version = "1.2.4"
+    group = 'com.github.LightSun.Java-base'
+
     tasks.withType(Javadoc) {
         options.addStringOption('Xdoclint:none', '-quiet')
         options.addStringOption('encoding', 'UTF-8')
@@ -27,11 +25,29 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: "java-library"
 
-// In this section you declare the dependencies for your production and test code
-dependencies {
+    sourceCompatibility = 1.8 // java 8
+    targetCompatibility = 1.8
 
-    testCompile 'junit:junit:4.13.2'
+    java {
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId project.group
+                artifactId project.name
+                version project.version
+                from components.java
+            }
+        }
+    }
 }
 
 

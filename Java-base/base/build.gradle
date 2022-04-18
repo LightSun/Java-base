@@ -1,21 +1,9 @@
-
 apply plugin: 'java'
-
-group = 'com.github.LightSun.Java-base'
-version = library_version
 
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    testCompile 'junit:junit:4.13.2'
-}
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    //getArchiveClassifier().set('sources')
-}
-artifacts {
-    archives sourcesJar
+    testImplementation 'junit:junit:4.12'
 }
 
 /*

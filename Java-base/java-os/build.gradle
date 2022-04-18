@@ -10,9 +10,6 @@
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 
-group = 'com.github.LightSun.Java-base'
-version = library_version
-
 dependencies {
     testImplementation 'junit:junit:4.13.2'
     
