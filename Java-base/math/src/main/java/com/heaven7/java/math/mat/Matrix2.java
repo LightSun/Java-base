@@ -148,6 +148,42 @@ public class Matrix2<T> {
         return getRowCount() * getColumnCount();
     }
 
+    /**
+     * clip the mat with target row and column parameters.
+     * @param rowStart the row start
+     * @param rowEnd the row end
+     * @param colStart the col start
+     * @param colEnd the col end
+     * @return the mat
+     * @since 1.2.5
+     */
+    public Matrix2<T> subMat(int rowStart, int rowEnd,int colStart, int colEnd) {
+        final int rc = getRowCount();
+        final int cc = getColumnCount();
+        if(rowStart < 0){
+            rowStart = 0;
+        }
+        if(rowEnd < 0){
+            rowEnd = rc - 1;
+        }
+        if(colStart < 0){
+            colStart = 0;
+        }
+        if(colEnd < 0){
+            colEnd = cc - 1;
+        }
+        rowStart = Math.min(rowStart, rc - 1);
+        rowEnd = Math.min(rowEnd, rc - 1);
+        colStart = Math.min(colStart, cc - 1);
+        colEnd = Math.min(colEnd, cc - 1);
+        //
+        List<List<T>> ret = new ArrayList<>();
+        for (int i = rowStart; i <= rowEnd; i++) {
+            List<T> ts = values.get(i);
+            ret.add(ts.subList(colStart, colEnd + 1));
+        }
+        return new Matrix2<>(ret);
+    }
     //================================================================================================================
 
     /**
