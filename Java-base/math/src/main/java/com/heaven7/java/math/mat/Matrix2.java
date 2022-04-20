@@ -149,6 +149,25 @@ public class Matrix2<T> {
     }
 
     /**
+     * get column data.
+     * @param idx the idx of column
+     * @return null if idx invalid. empty for empty mat, or else return the expected list.
+     * @since 1.2.5
+     */
+    public List<T> getColumn(int idx){
+        if(values.size() == 0){
+            return Collections.emptyList();
+        }
+        if(idx >= values.get(0).size()){
+            return null;
+        }
+        List<T> ret = new ArrayList<>();
+        for (int i = 0; i < getRowCount(); i++) {
+            ret.add(values.get(i).get(idx));
+        }
+        return ret;
+    }
+    /**
      * clip the mat with target row and column parameters.
      * @param rowStart the row start
      * @param rowEnd the row end
