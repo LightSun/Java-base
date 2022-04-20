@@ -19,6 +19,7 @@ import java.util.List;
  * Two-dimensional matrix
  *
  * @param <T> the type of element
+ * @author heaven7
  */
 public class Matrix2<T> {
 
@@ -166,6 +167,21 @@ public class Matrix2<T> {
             ret.add(values.get(i).get(idx));
         }
         return ret;
+    }
+    /**
+     * get row data.
+     * @param idx the idx of row
+     * @return null if idx invalid. empty for empty mat, or else return the expected list.
+     * @since 1.2.5
+     */
+    public List<T> getRow(int idx){
+        if(values.size() == 0){
+            return Collections.emptyList();
+        }
+        if(idx >= values.size()){
+            return null;
+        }
+        return values.get(idx);
     }
     /**
      * clip the mat with target row and column parameters.
