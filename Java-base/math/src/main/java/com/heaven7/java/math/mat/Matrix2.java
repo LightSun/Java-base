@@ -1,10 +1,7 @@
 package com.heaven7.java.math.mat;
 
 import com.heaven7.java.base.anno.Nullable;
-import com.heaven7.java.visitor.FireIndexedVisitor;
-import com.heaven7.java.visitor.PileVisitor;
-import com.heaven7.java.visitor.ResultVisitor;
-import com.heaven7.java.visitor.Visitors;
+import com.heaven7.java.visitor.*;
 import com.heaven7.java.visitor.collection.VisitServices;
 
 import java.io.IOException;
@@ -20,6 +17,7 @@ import java.util.List;
  *
  * @param <T> the type of element
  * @author heaven7
+ * @since 1.2.5
  */
 public class Matrix2<T> {
 
@@ -29,6 +27,56 @@ public class Matrix2<T> {
         this.values = values;
     }
 
+    /**
+     * concat lists to a mat by column.
+     * @param lists the lists
+     * @param <T> the type
+     * @return the mat
+     * @since 1.2.5.2
+     */
+    public static <T> Matrix2<T> ofListsColumn(List<T>...lists) {
+        final int w = lists[0].size();
+        final int h = lists.length;
+        List<List<T>> list = new ArrayList<>();
+        for (int i = 0; i < w; i++) {
+            List<T> row = new ArrayList<>();
+            for (int j = 0; j < h; j++) {
+                row.add(lists[j].get(i));
+            }
+            list.add(row);
+        }
+        return new Matrix2<T>(list);
+    }
+    /**
+     * concat lists to a mat by row.
+     * @param lists the lists
+     * @param <T> the type
+     * @return the mat
+     * @since 1.2.5.2
+     */
+    public static <T> Matrix2<T> ofListsRow(List<T>...lists) {
+        List<T> tmpList = new ArrayList<>();
+        for (List<T> l: lists) {
+            tmpList.addAll(l);
+        }
+        return ofList(tmpList);
+    }
+    /**
+     * convert list to mat .
+     * @param l the list
+     * @param <T> the type
+     * @return the mat
+     * @since 1.2.5.2
+     */
+    public static <T> Matrix2<T> ofList(List<T> l) {
+        List<List<T>> list = new ArrayList<>();
+        for (int i = 0; i < l.size(); i++) {
+            ArrayList<T> tmp = new ArrayList<>(2);
+            tmp.add(l.get(i));
+            list.add(tmp);
+        }
+        return new Matrix2<T>(list);
+    }
     public static Matrix2<Integer> ofIntArrayArray(int[][] data) {
         List<List<Integer>> list = new ArrayList<>();
         final int w = data.length;
@@ -218,6 +266,40 @@ public class Matrix2<T> {
             ret.add(ts.subList(colStart, colEnd + 1));
         }
         return new Matrix2<>(ret);
+    }
+
+    /**
+     * visit as rows
+     * @param visitor the row visitor
+     * @param collector the collector
+     * @param <R> the target type
+     * @since 1.2.5.2
+     */
+    public <R> void visitRows(Visitor1<List<T>, Integer, R> visitor, Visitor<R, Void> collector){
+        final int w = getRowCount();
+        for (int j = 0; j < w; j++) {
+            R r = visitor.visit(values.get(j), j);
+            collector.visit(r);
+        }
+    }
+    /**
+     * visit as columns
+     * @param visitor the column visitor
+     * @param collector the collector
+     * @param <R> the target type
+     * @since 1.2.5.2
+     */
+    public <R> void visitColumns(Visitor1<List<T>, Integer, R> visitor, Visitor<R, Void> collector){
+        final int w = getRowCount();
+        final int h = getColumnCount();
+        for (int i = 0; i < h; i++) {
+            List<T> list = new ArrayList<>();
+            for (int j = 0; j < w; j++) {
+                list.add(values.get(j).get(i));
+            }
+            R r = visitor.visit(list, i);
+            collector.visit(r);
+        }
     }
     //================================================================================================================
 
