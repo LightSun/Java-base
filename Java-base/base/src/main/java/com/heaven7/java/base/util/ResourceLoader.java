@@ -231,10 +231,11 @@ public abstract class ResourceLoader {
     static class PcResourceLoader extends ResourceLoader {
         @Override
         public InputStream loadFileAsStream(Object context, String path) throws IOException{
-            if (TextUtils.isRelativePath(path)) {
+            //may be absolute path, relative path or resources path.
+            try{
+                return new FileInputStream(path);
+            }catch (Exception e){
                 return ResourceLoader.class.getClassLoader().getResourceAsStream(path);
-            } else {
-                 return new FileInputStream(path);
             }
         }
     }
