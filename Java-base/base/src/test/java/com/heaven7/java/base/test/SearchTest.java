@@ -15,13 +15,14 @@ public class SearchTest extends TestCase{
 	
 	public void testEmpty(){
 		List<Bean> list = new ArrayList<>();
+		list.add(new Bean("10086"));
 		Comparator<Bean> comparator = new Comparator<SearchTest.Bean>() {
 			@Override
 			public int compare(Bean o1, Bean o2) {
 				return o1.txt.compareTo(o2.txt);
 			}
 		};
-		assertEquals(-1, SearchUtils.binarySearch(list, new Bean("b"), comparator));
+		assertEquals(-2, SearchUtils.binarySearch(list, new Bean("b"), comparator));
 	}
 	
 	public void testAnyType(){

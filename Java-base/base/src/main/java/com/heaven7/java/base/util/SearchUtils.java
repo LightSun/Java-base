@@ -1,5 +1,7 @@
 package com.heaven7.java.base.util;
 
+import com.heaven7.java.base.anno.Nullable;
+
 import java.util.Comparator;
 import java.util.List;
 
@@ -23,12 +25,12 @@ public final class SearchUtils {
 	 * @param key
 	 *            the key to search
 	 * @param comparator
-	 *            the comparator, can't be null.
+	 *            the comparator, null for comparable.
 	 * @return the index. if index < 0, means the element is not in the array,
 	 *         and the right insert position = -(index +1 ) . if index >=0 .
 	 *         right. if list.size() == 0 . return -1. 
 	 */
-	public static <T> int binarySearch(List<T> list, T key, Comparator<T> comparator) {
+	public static <T> int binarySearch(List<T> list, T key, @Nullable Comparator<? super T> comparator) {
 		return binarySearch(list, 0, list.size(), key, comparator);
 	}
 
@@ -48,13 +50,15 @@ public final class SearchUtils {
 	 * @param key
 	 *            the key to search
 	 * @param comparator
-	 *            the comparator,can't be null.
+	 *            the comparator, null for comparable.
 	 * @return the index. if index < 0, means the element is not in the array,
 	 *         and the right insert position = -(index +1 ) . if index >=0 .
 	 *         right
 	 */
-	public static <T> int binarySearch(List<T> list, int start, int len, T key, Comparator<T> comparator) {
-		Throwables.checkNull(comparator);
+	public static <T> int binarySearch(List<T> list, int start, int len, T key, @Nullable Comparator<? super T> comparator) {
+		if(comparator == null){
+			comparator = CMP_DEFAULT;
+		}
 		int high = start + len, low = start - 1, guess;
 
 		while (high - low > 1) {
@@ -129,4 +133,11 @@ public final class SearchUtils {
 			return ~high;
 	}
 
+	@SuppressWarnings({"unchecked","rawtypes"})
+	private static final Comparator<Object> CMP_DEFAULT = new Comparator<Object>() {
+		@Override
+		public int compare(Object o1, Object o2) {
+			return ((Comparable)o1).compareTo(o2);
+		}
+	};
 }
