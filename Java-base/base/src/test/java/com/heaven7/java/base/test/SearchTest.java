@@ -7,11 +7,18 @@ import java.util.List;
 import com.heaven7.java.base.util.SearchUtils;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 public class SearchTest extends TestCase{
 	
-	
-
+	@Test
+	public void test_binarySearchDesc(){
+		int[] arr = new int []{19, 10, 9, 8, 8, 7, 4, 3, 2};
+		int index = SearchUtils.binarySearchDesc(arr, 11);
+		assertIndex(-(index + 1), 1);
+		index = SearchUtils.binarySearchDesc(arr, 6);
+		assertIndex(-(index + 1), 6);
+	}
 	
 	public void testEmpty(){
 		List<Bean> list = new ArrayList<>();

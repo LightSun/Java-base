@@ -132,6 +132,115 @@ public final class SearchUtils {
 		else
 			return ~high;
 	}
+	/**
+	 * binary search the key in the desc-array
+	 * @param a the array
+	 * @param key the key to search
+	 * @return the index. if index < 0, means the element is not in the array,
+	 * 	       and the right insert position = -(index +1 ) . if index >=0 .
+	 * 	       right
+	 * @since 1.2.6
+	 */
+	public static int binarySearchDesc(int[] a, int key) {
+		return binarySearchDesc(a, 0, a.length, key);
+	}
+
+	/**
+	 * binary search the key in the desc-array
+	 * @param a the array
+	 * @param start the start index
+	 * @param len the end index
+	 * @param key the key to search
+	 * @return the index. if index < 0, means the element is not in the array,
+	 * 	       and the right insert position = -(index +1 ) . if index >=0 .
+	 * 	       right
+	 * @since 1.2.6
+	 */
+	public static int binarySearchDesc(int[] a, int start, int len, int key) {
+		int high = start + len, low = start - 1, guess;
+
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (a[guess] > key)
+				low = guess;
+			else
+				high = guess;
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (a[high] == key)
+			return high;
+		else
+			return ~high;
+	}
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param <T>
+	 *            the type to compare
+	 * @param list
+	 *            the sorted list (sort ascending)
+	 * @param key
+	 *            the key to search
+	 * @param comparator
+	 *            the comparator, null for comparable.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.6
+	 */
+	public static <T> int binarySearchDesc(List<T> list, T key, @Nullable Comparator<? super T> comparator) {
+		return binarySearchDesc(list,0, list.size(), key, comparator);
+	}
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param <T>
+	 *            the type to compare
+	 * @param list
+	 *            the sorted list (sort ascending)
+	 * @param start
+	 *            the start index of list
+	 * @param len
+	 *            the length of search in list.
+	 * @param key
+	 *            the key to search
+	 * @param comparator
+	 *            the comparator, null for comparable.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.6
+	 */
+	public static <T> int binarySearchDesc(List<T> list, int start, int len, T key, @Nullable Comparator<? super T> comparator) {
+		if(comparator == null){
+			comparator = CMP_DEFAULT;
+		}
+		int high = start + len, low = start - 1, guess;
+
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (comparator.compare(list.get(guess), key) > 0) {
+				low = guess;
+			} else {
+				high = guess;
+			}
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (comparator.compare(list.get(high), key) == 0)
+			return high;
+		else
+			return ~high;
+	}
 
 	@SuppressWarnings({"unchecked","rawtypes"})
 	private static final Comparator<Object> CMP_DEFAULT = new Comparator<Object>() {
