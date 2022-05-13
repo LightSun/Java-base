@@ -12,7 +12,376 @@ import java.util.List;
  * @since 1.0.5
  */
 public final class SearchUtils {
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param a
+	 *            the sorted array
+	 * @param start
+	 *            the start index of array
+	 * @param len
+	 *            the length of elements in array
+	 * @param key
+	 *            the target key.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.7
+	 */
+	public static int binarySearchDesc(long[] a, int start, int len, long key) {
+		int high = start + len, low = start - 1, guess;
 
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (a[guess] > key)
+				low = guess;
+			else
+				high = guess;
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (a[high] == key)
+			return high;
+		else
+			return ~high;
+	}
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param a
+	 *            the sorted array
+	 * @param start
+	 *            the start index of array
+	 * @param len
+	 *            the length of elements in array
+	 * @param key
+	 *            the target key.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.7
+	 */
+	public static int binarySearchDesc(float[] a, int start, int len, float key) {
+		int high = start + len, low = start - 1, guess;
+
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (a[guess] > key)
+				low = guess;
+			else
+				high = guess;
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (a[high] == key)
+			return high;
+		else
+			return ~high;
+	}
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param a
+	 *            the sorted array
+	 * @param start
+	 *            the start index of array
+	 * @param len
+	 *            the length of elements in array
+	 * @param key
+	 *            the target key.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.7
+	 */
+	public static int binarySearchDesc(double[] a, int start, int len, double key) {
+		int high = start + len, low = start - 1, guess;
+
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (a[guess] > key)
+				low = guess;
+			else
+				high = guess;
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (a[high] == key)
+			return high;
+		else
+			return ~high;
+	}
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param a
+	 *            the sorted array
+	 * @param start
+	 *            the start index of array
+	 * @param len
+	 *            the length of elements in array
+	 * @param key
+	 *            the target key.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.7
+	 */
+	public static int binarySearchDesc(short[] a, int start, int len, short key) {
+		int high = start + len, low = start - 1, guess;
+
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (a[guess] > key)
+				low = guess;
+			else
+				high = guess;
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (a[high] == key)
+			return high;
+		else
+			return ~high;
+	}
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param a
+	 *            the sorted array
+	 * @param start
+	 *            the start index of array
+	 * @param len
+	 *            the length of elements in array
+	 * @param key
+	 *            the target key.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.7
+	 */
+	public static int binarySearchDesc(byte[] a, int start, int len, byte key) {
+		int high = start + len, low = start - 1, guess;
+
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (a[guess] > key)
+				low = guess;
+			else
+				high = guess;
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (a[high] == key)
+			return high;
+		else
+			return ~high;
+	}
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param a
+	 *            the sorted array
+	 * @param start
+	 *            the start index of array
+	 * @param len
+	 *            the length of elements in array
+	 * @param key
+	 *            the target key.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.7
+	 */
+	public static int binarySearch(byte[] a, int start, int len, byte key) {
+		int high = start + len, low = start - 1, guess;
+
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (a[guess] < key)
+				low = guess;
+			else
+				high = guess;
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (a[high] == key)
+			return high;
+		else
+			return ~high;
+	}
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param a
+	 *            the sorted array
+	 * @param start
+	 *            the start index of array
+	 * @param len
+	 *            the length of elements in array
+	 * @param key
+	 *            the target key.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.7
+	 */
+	public static int binarySearch(short[] a, int start, int len, short key) {
+		int high = start + len, low = start - 1, guess;
+
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (a[guess] < key)
+				low = guess;
+			else
+				high = guess;
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (a[high] == key)
+			return high;
+		else
+			return ~high;
+	}
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param a
+	 *            the sorted array
+	 * @param start
+	 *            the start index of array
+	 * @param len
+	 *            the length of elements in array
+	 * @param key
+	 *            the target key.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.7
+	 */
+	public static int binarySearch(long[] a, int start, int len, long key) {
+		int high = start + len, low = start - 1, guess;
+
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (a[guess] < key)
+				low = guess;
+			else
+				high = guess;
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (a[high] == key)
+			return high;
+		else
+			return ~high;
+	}
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param a
+	 *            the sorted array
+	 * @param start
+	 *            the start index of array
+	 * @param len
+	 *            the length of elements in array
+	 * @param key
+	 *            the target key.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.7
+	 */
+	public static int binarySearch(float[] a, int start, int len, float key) {
+		int high = start + len, low = start - 1, guess;
+
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (a[guess] < key)
+				low = guess;
+			else
+				high = guess;
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (a[high] == key)
+			return high;
+		else
+			return ~high;
+	}
+	/**
+	 * binary search the key in the array. return the index of it. if index < 0,
+	 * means the element is not in the array, and the right insert position =
+	 * -(index +1 ) . if index >=0 . right
+	 *
+	 * @param a
+	 *            the sorted array
+	 * @param start
+	 *            the start index of array
+	 * @param len
+	 *            the length of elements in array
+	 * @param key
+	 *            the target key.
+	 * @return the index. if index < 0, means the element is not in the array,
+	 *         and the right insert position = -(index +1 ) . if index >=0 .
+	 *         right
+	 * @since 1.2.7
+	 */
+	public static int binarySearch(double[] a, int start, int len, double key) {
+		int high = start + len, low = start - 1, guess;
+
+		while (high - low > 1) {
+			guess = (high + low) / 2;
+
+			if (a[guess] < key)
+				low = guess;
+			else
+				high = guess;
+		}
+
+		if (high == start + len)
+			return ~(start + len);
+		else if (a[high] == key)
+			return high;
+		else
+			return ~high;
+	}
 	/**
 	 * binary search the key in the array. return the index of it. if index < 0,
 	 * means the element is not in the array, and the right insert position =
