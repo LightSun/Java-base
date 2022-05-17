@@ -44,9 +44,16 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key){
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 	/**
@@ -81,9 +88,16 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key){
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 	/**
@@ -118,9 +132,16 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key){
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 	/**
@@ -155,9 +176,16 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key){
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 	/**
@@ -192,9 +220,16 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key){
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 	/**
@@ -229,9 +264,16 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key){
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 	/**
@@ -266,9 +308,16 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key){
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 	/**
@@ -303,9 +352,16 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key){
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 	/**
@@ -340,9 +396,16 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key){
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 	/**
@@ -377,9 +440,16 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key) {
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 	/**
@@ -442,9 +512,18 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (comparator.compare(list.get(high), key) == 0)
-			return high;
-		else
+		else if (comparator.compare(list.get(high), key) == 0) {
+			//may have the same element. we only want the first element index.
+			int id = high;
+			for (; id > 0; ) {
+				id--;
+				if (comparator.compare(list.get(id), key) != 0) {
+					return id + 1;
+				}
+			}
+			return id;
+			//return high;
+		}else
 			return ~high;
 	}
 
@@ -496,9 +575,17 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key) {
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+			//return high;
+		}else
 			return ~high;
 	}
 	/**
@@ -539,9 +626,17 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (a[high] == key)
-			return high;
-		else
+		else if (a[high] == key) {
+			//may have the same element. we only want the first element index.
+			int id = high;
+			while (id > 0) {
+				id--;
+				if (a[id] != key) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 	/**
@@ -605,9 +700,17 @@ public final class SearchUtils {
 
 		if (high == start + len)
 			return ~(start + len);
-		else if (comparator.compare(list.get(high), key) == 0)
-			return high;
-		else
+		else if (comparator.compare(list.get(high), key) == 0) {
+			//may have the same element. we only want the first element index.
+			int id = high;
+			for (; id > 0; ) {
+				id--;
+				if (comparator.compare(list.get(id), key) != 0) {
+					return id + 1;
+				}
+			}
+			return id;
+		}else
 			return ~high;
 	}
 
