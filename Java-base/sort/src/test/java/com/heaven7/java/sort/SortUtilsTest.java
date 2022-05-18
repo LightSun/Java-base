@@ -28,24 +28,27 @@ public class SortUtilsTest {
                 5, 1, 2, 9, 8, 3, 2, 2
         };
         int[] retArr = Arrays.copyOf(arr, arr.length);
-        SortUtils.insertSortWithCallback(retArr, new SortUtils.Callback() {
-            int val ;
+        SortUtils.insertSortWithCallback(retArr, retArr.length, new SortUtils.Callback() {
             @Override
-            public void saveValue(Object arr, int index) {
+            public Object getValue(Object arr, int index) {
                // val = retArr[index];
                 System.out.println("saveValue: " + index + ", " + retArr[index]);
+                return retArr[index];
             }
             @Override
-            public void restoreValueTo(Object arr, int target) {
-               // retArr[target] = val;
-                System.out.println("restoreValueTo: " + target);
+            public void setValue(Object arr, int index, Object val) {
+                retArr[index] = (Integer) val;
+                System.out.println("restoreValueTo: " + index);
+            }
+
+            @Override
+            public void arraycopy(Object arr, int srcPos, int dstPos, int len) {
+                System.out.println("swap value: i = " + srcPos + " ,j = " + dstPos + " , len = " + len);
+                System.arraycopy(retArr, srcPos, retArr, dstPos, len);
             }
             @Override
-            public void swap(Object arr, int i, int j) {
-                System.out.println("swap value: i = " + i + " ,j = " + j);
-//                int old = retArr[i];
-//                retArr[i] = retArr[j];
-//                retArr[j] = old;
+            public boolean isBigger(Object arr, int index, Object key) {
+                return retArr[index] > (Integer) key;
             }
         });
         System.out.println(Arrays.toString(retArr));

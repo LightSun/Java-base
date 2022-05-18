@@ -107,6 +107,16 @@ public final class IndirectSorter {
         }
         return retval;
     }
+    /**
+     * sort and return the origin indexes
+     *
+     * @param args the array to sort
+     * @param start the start index, include.
+     * @param end the end index. exclude
+     * @param cmp  the Comparator, null means T must impl Comparable
+     * @param <T>  the element type
+     * @return the index array
+     */
     public static <T> int[] sort(List<T> args, int start, int end, @Nullable IndexComparator<? super T> cmp) {
         final int c = end - start;
         Integer[] originIndexes = new Integer[c];
@@ -126,6 +136,16 @@ public final class IndirectSorter {
         }
         return retval;
     }
+    /**
+     * sort and return the origin indexes
+     *
+     * @param args the array to sort
+     * @param start the start index, include.
+     * @param end the end index. exclude
+     * @param cmp  the Comparator, null means T must impl Comparable
+     * @param <T>  the element type
+     * @return the index array
+     */
     public static int[] sort(int[] args, int start, int end, @Nullable IndexComparator<? super Integer> cmp) {
         final int c = end - start;
         Integer[] originIndexes = new Integer[c];
@@ -142,6 +162,16 @@ public final class IndirectSorter {
         }
         return retval;
     }
+    /**
+     * sort and return the origin indexes
+     *
+     * @param args the array to sort
+     * @param start the start index, include.
+     * @param end the end index. exclude
+     * @param cmp  the Comparator, null means T must impl Comparable
+     * @param <T>  the element type
+     * @return the index array
+     */
     public static int[] sort(short[] args, int start, int end,@Nullable IndexComparator<? super Short> cmp) {
         final int c = end - start;
         Integer[] originIndexes = new Integer[c];
@@ -158,6 +188,16 @@ public final class IndirectSorter {
         }
         return retval;
     }
+    /**
+     * sort and return the origin indexes
+     *
+     * @param args the array to sort
+     * @param start the start index, include.
+     * @param end the end index. exclude
+     * @param cmp  the Comparator, null means T must impl Comparable
+     * @param <T>  the element type
+     * @return the index array
+     */
     public static int[] sort(byte[] args, int start, int end,@Nullable IndexComparator<? super Byte> cmp) {
         final int c = end - start;
         Integer[] originIndexes = new Integer[c];
@@ -176,6 +216,16 @@ public final class IndirectSorter {
         }
         return retval;
     }
+    /**
+     * sort and return the origin indexes
+     *
+     * @param args the array to sort
+     * @param start the start index, include.
+     * @param end the end index. exclude
+     * @param cmp  the Comparator, null means T must impl Comparable
+     * @param <T>  the element type
+     * @return the index array
+     */
     public static int[] sort(long[] args, int start, int end,@Nullable IndexComparator<? super Long> cmp) {
         final int c = end - start;
         Integer[] originIndexes = new Integer[c];
@@ -194,6 +244,16 @@ public final class IndirectSorter {
         }
         return retval;
     }
+    /**
+     * sort and return the origin indexes
+     *
+     * @param args the array to sort
+     * @param start the start index, include.
+     * @param end the end index. exclude
+     * @param cmp  the Comparator, null means T must impl Comparable
+     * @param <T>  the element type
+     * @return the index array
+     */
     public static int[] sort(float[] args, int start, int end,@Nullable IndexComparator<? super Float> cmp) {
         final int c = end - start;
         Integer[] originIndexes = new Integer[c];
@@ -212,6 +272,16 @@ public final class IndirectSorter {
         }
         return retval;
     }
+    /**
+     * sort and return the origin indexes
+     *
+     * @param args the array to sort
+     * @param start the start index, include.
+     * @param end the end index. exclude
+     * @param cmp  the Comparator, null means T must impl Comparable
+     * @param <T>  the element type
+     * @return the index array
+     */
     public static int[] sort(double[] args, int start, int end, @Nullable IndexComparator<? super Double> cmp) {
         final int c = end - start;
         Integer[] originIndexes = new Integer[c];

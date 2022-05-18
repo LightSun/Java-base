@@ -26,6 +26,7 @@ public class IndirectSorterTest {
                 return o1.compareTo(o2);
             }
         });
+        System.out.println(Arrays.toString(args));
         for (int i : indexes) {
             System.out.printf("original pos: %d, val =  %s\n", i, origin[i]);
         }
