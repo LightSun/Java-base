@@ -5,6 +5,7 @@ import com.heaven7.java.base.anno.Platform;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -123,9 +124,21 @@ public abstract class ResourceLoader {
      * @return the content string
      */
     public String loadFileAsString(Object context, String path) {
+        return loadFileAsString(context, path, "utf-8");
+    }
+
+    /**
+     * load file as string with charset.
+     * @param context the context
+     * @param path the file path
+     * @param charset the charset
+     * @return the content
+     * @since 1.2.1
+     */
+    public String loadFileAsString(Object context, String path, String charset) {
         Reader reader = null;
         try {
-            reader = new InputStreamReader(loadFileAsStream(context, path));
+            reader = new InputStreamReader(loadFileAsStream(context, path), charset);
             return IOUtils.readString(reader);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -133,7 +146,6 @@ public abstract class ResourceLoader {
             IOUtils.closeQuietly(reader);
         }
     }
-
     /**
      * read the path as lines.
      * @param context the context. if on pc. this often be null. or on android, this is the android context.
