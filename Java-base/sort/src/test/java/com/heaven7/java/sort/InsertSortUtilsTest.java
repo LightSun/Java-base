@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class SortUtilsTest {
+public class InsertSortUtilsTest {
 
     @Test
     public void test1() {
@@ -15,7 +15,7 @@ public class SortUtilsTest {
                 5, 1, 2, 9, 8, 3, 2, 2
         };
         int[] retArr = Arrays.copyOf(arr, arr.length);
-        SortUtils.insertSort(retArr);
+        InsertSortUtils.insertSort(retArr);
         System.out.println(Arrays.toString(retArr));
         int index = SearchUtils.binarySearch(retArr, 0, retArr.length, 2);
         System.out.println("index = " + index);
@@ -28,7 +28,7 @@ public class SortUtilsTest {
                 5, 1, 2, 9, 8, 3, 2, 2
         };
         int[] retArr = Arrays.copyOf(arr, arr.length);
-        SortUtils.insertSortWithCallback(retArr, retArr.length, new SortUtils.Callback() {
+        InsertSortUtils.insertSortWithCallback(retArr, retArr.length, new InsertSortUtils.Callback() {
             @Override
             public Object getValue(Object arr, int index) {
                // val = retArr[index];

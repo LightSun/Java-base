@@ -4,7 +4,7 @@ package com.heaven7.java.sort;
  * @author heaven7
  * @since 1.2.6
  */
-public final class SortUtils {
+public final class InsertSortUtils {
 
     public static void insertSort(short[] arr) {
         int L, R, mid;

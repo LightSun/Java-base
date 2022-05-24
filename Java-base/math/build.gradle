@@ -5,5 +5,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     implementation project(":base")
+    implementation project(":sort")
     implementation 'com.github.LightSun:visitor:1.3.7-pre'
 }
