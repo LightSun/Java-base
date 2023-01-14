@@ -28,9 +28,9 @@ public class CmdHelper {
         return cmd_log;
     }
     public boolean execute(){
-        return execute(new InheritIoCallback());
+        return execute(new InheritIoCallback(), null);
     }
-    public boolean execute(Callback callback){
+    public boolean execute(Callback callback, String out_file){
         System.out.println("start run: " + cmd_log);
        // PerformanceHelper helper = new PerformanceHelper();
        // helper.begin();
@@ -38,20 +38,27 @@ public class CmdHelper {
         boolean success = false;
         try {
             ProcessBuilder pb = new ProcessBuilder(cmds);
-            pb.redirectErrorStream(true);
+            if(out_file != null){
+                pb.redirectError(new File(out_file));
+                pb.redirectOutput(new File(out_file));
+            }else{
+                pb.redirectErrorStream(true);
+            }
             callback.beforeStartCmd(this, pb);
             Process process = pb.start();
             process.waitFor();
             success = process.exitValue() == 0;
             System.out.println(cmd_log + "  ,exitValue = " + process.exitValue());
 
-            reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            callback.onStart(this);
-            String line;
-            while( (line = reader.readLine()) != null){
-                callback.collect(this, line);
+            if(out_file == null){
+                reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                callback.onStart(this);
+                String line;
+                while( (line = reader.readLine()) != null){
+                    callback.collect(this, line);
+                }
+                callback.onEnd(this);
             }
-            callback.onEnd(this);
         }catch (Exception e){
             callback.onFailed(this, e);
             return false;
