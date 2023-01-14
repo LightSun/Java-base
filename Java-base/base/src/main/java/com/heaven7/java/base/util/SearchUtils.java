@@ -714,6 +714,33 @@ public final class SearchUtils {
 			return ~high;
 	}
 
+	/**
+	 *  find first not equals position.
+	 * @param a the array, which is sorted
+	 * @param start the start position
+	 * @param len the end position
+	 * @param key the key to search
+	 * @return the first not equals position
+	 * @since 1.2.7
+	 */
+	public static int findFirstNeqPos(int[] a, int start, int len, int key) {
+		int high = start + len;
+		int low = start - 1;
+		int guess = -1;
+		while(high - low > 1) {
+			guess = (high + low) / 2;
+			if (a[guess] != key) {
+				low = guess;
+			} else {
+				high = guess;
+			}
+		}
+//        System.out.println("low = " + low);
+//        System.out.println("high = " + high);
+//        System.out.println("guess = " + guess);
+		return low;
+	}
+
 	@SuppressWarnings({"unchecked","rawtypes"})
 	private static final Comparator<Object> CMP_DEFAULT = new Comparator<Object>() {
 		@Override
