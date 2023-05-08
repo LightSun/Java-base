@@ -274,7 +274,7 @@ public class Handler {
 	 *            Value to assign to the returned Message.arg2 field.
 	 * @return A Message from the global message pool.
 	 */
-	public final Message obtainMessage(int what, int arg1, int arg2) {
+	public final Message obtainMessage(int what, int arg1, long arg2) {
 		return Message.obtain(this, what, arg1, arg2);
 	}
 
