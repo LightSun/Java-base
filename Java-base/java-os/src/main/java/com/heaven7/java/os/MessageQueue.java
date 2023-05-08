@@ -236,7 +236,7 @@ public class MessageQueue {
 				if (n != null) {
 					if (n.target == h && n.what == what &&
 							(object == null || n.obj == object
-							|| (allowEquals && p.obj.equals(object)))) {
+							|| (allowEquals && n.obj.equals(object)))) {
 						Message nn = n.next;
 						n.recycleUnchecked();
 						p.next = nn;
